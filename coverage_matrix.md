@@ -17,7 +17,8 @@
 | 第3章 线性模型 | 线性回归完整数据任务 | `integrated_tasks/02_linear_regression_csv/README.md` | `integrated_tasks/02_linear_regression_csv/reference/solution.py` | `integrated_tasks/02_linear_regression_csv/starter.py` | `test_integrated_linear_regression_reference.py` | 已验证 | 三份CSV、验证指标、模型恢复与严格输出；含8项测试 |
 | 第3章 线性模型 | 对数几率回归 | `watermelon_book/03_linear_models/02_logistic_regression/README.md` | `02_logistic_regression/reference/solution.py` | `02_logistic_regression/starter.py` | `test_logistic_regression_reference.py` | 已验证 | 稳定sigmoid/logits交叉熵、L2梯度与梯度下降；含12项测试 |
 | 第3章 线性模型 | 对数几率回归完整数据任务 | `integrated_tasks/03_logistic_regression_csv/README.md` | `integrated_tasks/03_logistic_regression_csv/reference/solution.py` | `integrated_tasks/03_logistic_regression_csv/starter.py` | `test_integrated_logistic_regression_reference.py` | 已验证 | 训练集标准化、验证多指标/AUC、模型恢复与概率输出；含11项测试 |
-| 第3章 线性模型 | LDA与多分类 | — | — | — | — | 未开始 | NumPy手写 |
+| 第3章 线性模型 | 二分类LDA、类内散度、Fisher投影与阈值判别 | `watermelon_book/03_linear_models/03_lda/README.md` | `03_lda/reference/solution.py` | `03_lda/starter.py` | `test_lda_reference.py` | 已验证 | 奇异散度使用伪逆；覆盖平移/投影缩放不变性与Fisher比率；含11项测试 |
+| 第3章 线性模型 | 一对其余与一对一多分类策略 | — | — | — | — | 未开始 | 待建设类别编码、分数汇总与确定性平票规则 |
 | 第4章 决策树 | 划分选择与树生成 | — | — | — | — | 未开始 | Python/NumPy 手写 |
 | 第4章 决策树 | 剪枝、连续值、缺失值、多变量树 | — | — | — | — | 未开始 | 分阶段实现 |
 | 第5章 神经网络 | 感知机、多层网络与 BP | — | — | — | — | 未开始 | NumPy 手写反向传播 |

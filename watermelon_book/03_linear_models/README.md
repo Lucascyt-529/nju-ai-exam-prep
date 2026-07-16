@@ -9,7 +9,7 @@
 | 1 | `01_linear_regression/`：预测、MSE、解析最小二乘与梯度下降 | 已建参考闭环 |
 | 2 | `integrated_tasks/02_linear_regression_csv/`：三份CSV、验证指标、模型保存与测试预测 | 已建参考闭环 |
 | 3 | `02_logistic_regression/`：稳定概率、交叉熵、L2梯度与梯度下降 | 已建参考闭环 |
-| 4 | 线性判别分析 | 待建设 |
+| 4 | `03_lda/`：类内散度、Fisher投影与二分类判别 | 已建参考闭环 |
 | 5 | 多分类学习 | 待建设 |
 
 ## 统一形状约定
