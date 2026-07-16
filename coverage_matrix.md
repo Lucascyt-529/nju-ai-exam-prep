@@ -19,7 +19,7 @@
 | 第3章 线性模型 | 对数几率回归完整数据任务 | `integrated_tasks/03_logistic_regression_csv/README.md` | `integrated_tasks/03_logistic_regression_csv/reference/solution.py` | `integrated_tasks/03_logistic_regression_csv/starter.py` | `test_integrated_logistic_regression_reference.py` | 已验证 | 训练集标准化、验证多指标/AUC、模型恢复与概率输出；含11项测试 |
 | 第3章 线性模型 | 二分类LDA、类内散度、Fisher投影与阈值判别 | `watermelon_book/03_linear_models/03_lda/README.md` | `03_lda/reference/solution.py` | `03_lda/starter.py` | `test_lda_reference.py` | 已验证 | 奇异散度使用伪逆；覆盖平移/投影缩放不变性与Fisher比率；含11项测试 |
 | 第3章 线性模型 | 一对其余与一对一多分类策略 | `watermelon_book/03_linear_models/04_multiclass_reduction/README.md` | `04_multiclass_reduction/reference/solution.py` | `04_multiclass_reduction/starter.py` | `test_multiclass_reduction_reference.py` | 已验证 | 非连续标签、OvR分数、OvO投票、四类组合数与确定性平票；含15项测试 |
-| 第3章 线性模型 | 类别不平衡、再缩放、采样与阈值移动 | — | — | — | — | 未开始 | 在进入决策树前建设，避免遗漏第3章相关主线 |
+| 第3章 线性模型 | 类别不平衡、再缩放、采样与阈值移动 | `watermelon_book/03_linear_models/05_class_imbalance/README.md` | `05_class_imbalance/reference/solution.py` | `05_class_imbalance/starter.py` | `test_class_imbalance_reference.py` | 已验证 | 类别权重、欠/过采样索引、代价阈值、先验漂移概率修正；含17项测试 |
 | 第4章 决策树 | 划分选择与树生成 | — | — | — | — | 未开始 | Python/NumPy 手写 |
 | 第4章 决策树 | 剪枝、连续值、缺失值、多变量树 | — | — | — | — | 未开始 | 分阶段实现 |
 | 第5章 神经网络 | 感知机、多层网络与 BP | — | — | — | — | 未开始 | NumPy 手写反向传播 |
