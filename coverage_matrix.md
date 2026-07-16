@@ -22,7 +22,8 @@
 | 第3章 线性模型 | 类别不平衡、再缩放、采样与阈值移动 | `watermelon_book/03_linear_models/05_class_imbalance/README.md` | `05_class_imbalance/reference/solution.py` | `05_class_imbalance/starter.py` | `test_class_imbalance_reference.py` | 已验证 | 类别权重、欠/过采样索引、代价阈值、先验漂移概率修正；含17项测试 |
 | 第4章 决策树 | 熵、信息增益、增益率、基尼指数与离散特征树 | `watermelon_book/04_decision_trees/01_discrete_tree/README.md` | `01_discrete_tree/reference/solution.py` | `01_discrete_tree/starter.py` | `test_discrete_decision_tree_reference.py` | 已验证 | 含增益率两步选择、XOR零增益递归、空分支与未见值回退；含21项测试 |
 | 第4章 决策树 | 验证集预剪枝与自底向上后剪枝 | `watermelon_book/04_decision_trees/02_pruning/README.md` | `01_discrete_tree/reference/solution.py` | `02_pruning/starter.py` | `test_decision_tree_pruning_reference.py` | 已验证 | 训练集选特征、验证集决定剪枝；准确率相同时保守剪枝；含13项测试 |
-| 第4章 决策树 | 连续值、缺失值与多变量树 | — | — | — | — | 未开始 | 分阶段实现 |
+| 第4章 决策树 | 连续阈值与离散/连续混合树 | `watermelon_book/04_decision_trees/03_continuous_mixed_tree/README.md` | `03_continuous_mixed_tree/reference/solution.py` | `03_continuous_mixed_tree/starter.py` | `test_continuous_mixed_tree_reference.py` | 已验证 | 相邻不同值中点、确定性阈值、连续特征重复使用与范围外预测；含17项测试 |
+| 第4章 决策树 | 缺失值与多变量树 | — | — | — | — | 未开始 | 分阶段实现 |
 | 第5章 神经网络 | 感知机、多层网络与 BP | — | — | — | — | 未开始 | NumPy 手写反向传播 |
 | 第5章 神经网络 | 全局最小、局部极小与其他常见网络 | — | — | — | — | 未开始 | 推导和小实验 |
 | 第6章 支持向量机 | 间隔、对偶与核函数 | — | — | — | — | 未开始 | 核心版本手写 |
