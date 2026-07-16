@@ -1,0 +1,4 @@
+sample_id,study_hours,attendance,label
+T001,1,0.70,0
+T002,3,0.80,1
+T003,5,0.90,1
