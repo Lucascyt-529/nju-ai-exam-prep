@@ -1,0 +1,2 @@
+minimum: 3
+coins: 1 5 5

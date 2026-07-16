@@ -10,4 +10,5 @@
 | 4 | `04_graph_traversal/`：确定性BFS/DFS与连通分量 | 已建参考闭环 |
 | 5 | `05_grid_shortest_path/`：网格BFS、不可达与路径恢复 | 已建参考闭环 |
 | 6 | `06_dijkstra_shortest_path/`：最小堆、陈旧条目与路径恢复 | 已建参考闭环 |
-| 7 | 动态规划基础 | 待建设 |
+| 7 | `07_min_coin_change/`：一维DP、不可达与组合恢复 | 已建参考闭环 |
+| 8 | `08_longest_common_subsequence/`：二维DP与确定性序列恢复 | 已建参考闭环 |
