@@ -9,8 +9,8 @@
 | 1 | `01_data_splitting/`：留出法、分层划分、K折与自助采样 | 已建参考闭环 |
 | 2 | `02_metrics/`：回归度量、二分类度量、ROC/AUC与代价敏感错误 | 已建参考闭环 |
 | 3 | `03_cross_validation/`：折内训练、折外预测和候选方案选择 | 已建参考闭环 |
-| 4 | 比较检验：假设检验、交叉验证比较、McNemar、Friedman/Nemenyi | 待建设 |
-| 5 | 偏差—方差分解 | 待建设 |
+| 4 | `04_overfitting_bias_variance/`：多项式复杂度、学习曲线与偏差—方差 | 已建参考闭环 |
+| 5 | 比较检验：假设检验、交叉验证比较、McNemar、Friedman/Nemenyi | 待建设 |
 
 ## 三条不可破坏的边界
 

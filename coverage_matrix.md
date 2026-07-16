@@ -7,12 +7,12 @@
 | 教材章节 | 核心条目 | 讲解文件 | 实现文件 | 练习 | 测试 | 状态 | 备注 |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | 第1章 绪论 | 基本术语、假设空间、归纳偏好、NFL | — | — | — | — | 未开始 | 以概念辨析和小实验为主 |
-| 第2章 模型评估与选择 | 经验误差、泛化误差、欠拟合与过拟合 | `watermelon_book/02_model_evaluation_selection/README.md` | — | — | — | 已建骨架 | 尚需过拟合实验与学生讲解 |
+| 第2章 模型评估与选择 | 经验误差、泛化误差、欠拟合与过拟合 | `04_overfitting_bias_variance/README.md` | `04_overfitting_bias_variance/reference/solution.py` | `04_overfitting_bias_variance/starter.py` | `test_overfitting_bias_variance_reference.py` | 已验证 | 多项式复杂度与学习曲线；未替代学生作答 |
 | 第2章 模型评估与选择 | 留出法、分层划分、K折与自助法 | `01_data_splitting/README.md` | `01_data_splitting/reference/solution.py` | `01_data_splitting/starter.py` | `test_model_evaluation_splitting_reference.py` | 已验证 | 路径相对第2章目录；含10项测试 |
 | 第2章 模型评估与选择 | 回归、二分类、ROC/AUC与代价敏感度量 | `02_metrics/README.md` | `02_metrics/reference/solution.py` | `02_metrics/starter.py` | `test_model_evaluation_metrics_reference.py` | 已验证 | 含12项测试；未替代学生作答 |
 | 第2章 模型评估与选择 | 交叉验证、折外预测与候选方案选择 | `03_cross_validation/README.md` | `03_cross_validation/reference/solution.py` | `03_cross_validation/starter.py` | `test_model_evaluation_cross_validation_reference.py` | 已验证 | 含7项测试；强调折内拟合隔离 |
 | 第2章 模型评估与选择 | 比较检验 | — | — | — | — | 未开始 | 后续覆盖假设检验、McNemar、Friedman/Nemenyi等 |
-| 第2章 模型评估与选择 | 偏差—方差分解 | — | — | — | — | 未开始 | 需要推导和可复现实验 |
+| 第2章 模型评估与选择 | 偏差—方差分解 | `04_overfitting_bias_variance/README.md` | `04_overfitting_bias_variance/reference/solution.py` | `04_overfitting_bias_variance/starter.py` | `test_overfitting_bias_variance_reference.py` | 已验证 | 重复采样、逐点偏差平方与方差；共享10项测试 |
 | 第3章 线性模型 | 线性回归预测、MSE、梯度、最小二乘与梯度下降 | `watermelon_book/03_linear_models/01_linear_regression/README.md` | `01_linear_regression/reference/solution.py` | `01_linear_regression/starter.py` | `test_linear_regression_reference.py` | 已验证 | 路径相对第3章目录；含10项测试 |
 | 第3章 线性模型 | 线性回归完整数据任务 | `integrated_tasks/02_linear_regression_csv/README.md` | `integrated_tasks/02_linear_regression_csv/reference/solution.py` | `integrated_tasks/02_linear_regression_csv/starter.py` | `test_integrated_linear_regression_reference.py` | 已验证 | 三份CSV、验证指标、模型恢复与严格输出；含8项测试 |
 | 第3章 线性模型 | 对数几率回归、LDA、多分类 | — | — | — | — | 未开始 | NumPy 手写 |
