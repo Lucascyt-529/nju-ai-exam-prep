@@ -14,3 +14,5 @@ transform：使用已经估计的参数处理训练集、验证集或测试集
 | `01_imputation_standardization/` | 均值填补、标准化、常数列和数据泄漏 | 已建参考闭环，等待学生练习 |
 
 后续将加入类别编码、数据划分、异常值、mini-batch 和完整预处理流水线。
+
+`integrated_tasks/01_preprocessing_pipeline/` 已提前建设完整预处理流水线，用来检验文件读写和本专题能否真正组合。只有完成相关基础学生版后才启用该综合题。

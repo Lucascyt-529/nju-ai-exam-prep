@@ -1,0 +1,4 @@
+sample_id,name,feature_1,feature_2,label
+S001,小林,1.0,10.0,0
+S002,小周,2.0,20.0,1
+S003,小陈,3.0,30.0,1

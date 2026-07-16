@@ -1,0 +1,6 @@
+student_id,name,study_hours,attendance
+S001, 小林 ,2.5,0.90
+S002,小周,,0.95
+S002, 小周,4.0,0.95
+S003,小陈,bad,0.80
+S004,小吴,5.0,
