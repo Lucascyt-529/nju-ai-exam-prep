@@ -1,0 +1,4 @@
+sample_id,feature_1,feature_2,target
+V01,3.0,0.0,7.0
+V02,0.0,2.0,7.0
+V03,2.0,3.0,14.0

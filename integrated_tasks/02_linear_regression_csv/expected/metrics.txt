@@ -1,0 +1,2 @@
+validation_mse=0.000000
+validation_r2=1.000000
