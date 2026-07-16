@@ -15,7 +15,8 @@
 | 第2章 模型评估与选择 | 偏差—方差分解 | `04_overfitting_bias_variance/README.md` | `04_overfitting_bias_variance/reference/solution.py` | `04_overfitting_bias_variance/starter.py` | `test_overfitting_bias_variance_reference.py` | 已验证 | 重复采样、逐点偏差平方与方差；共享10项测试 |
 | 第3章 线性模型 | 线性回归预测、MSE、梯度、最小二乘与梯度下降 | `watermelon_book/03_linear_models/01_linear_regression/README.md` | `01_linear_regression/reference/solution.py` | `01_linear_regression/starter.py` | `test_linear_regression_reference.py` | 已验证 | 路径相对第3章目录；含10项测试 |
 | 第3章 线性模型 | 线性回归完整数据任务 | `integrated_tasks/02_linear_regression_csv/README.md` | `integrated_tasks/02_linear_regression_csv/reference/solution.py` | `integrated_tasks/02_linear_regression_csv/starter.py` | `test_integrated_linear_regression_reference.py` | 已验证 | 三份CSV、验证指标、模型恢复与严格输出；含8项测试 |
-| 第3章 线性模型 | 对数几率回归、LDA、多分类 | — | — | — | — | 未开始 | NumPy 手写 |
+| 第3章 线性模型 | 对数几率回归 | `watermelon_book/03_linear_models/02_logistic_regression/README.md` | `02_logistic_regression/reference/solution.py` | `02_logistic_regression/starter.py` | `test_logistic_regression_reference.py` | 已验证 | 稳定sigmoid/logits交叉熵、L2梯度与梯度下降；含12项测试 |
+| 第3章 线性模型 | LDA与多分类 | — | — | — | — | 未开始 | NumPy手写 |
 | 第4章 决策树 | 划分选择与树生成 | — | — | — | — | 未开始 | Python/NumPy 手写 |
 | 第4章 决策树 | 剪枝、连续值、缺失值、多变量树 | — | — | — | — | 未开始 | 分阶段实现 |
 | 第5章 神经网络 | 感知机、多层网络与 BP | — | — | — | — | 未开始 | NumPy 手写反向传播 |
