@@ -1,0 +1,5 @@
+cohort,course,record_count,student_count,mean_score,pass_rate
+2024,math,2,2,70.000000,1.000000
+2024,python,1,1,90.000000,1.000000
+2025,math,1,1,50.000000,0.000000
+2025,python,2,2,55.000000,0.500000
