@@ -15,6 +15,7 @@ def test_required_control_files_exist() -> None:
         "syllabus.md",
         "coverage_matrix.md",
         "progress.md",
+        "PROJECT_STATE.md",
         "requirements.txt",
         "pytest.ini",
     }
