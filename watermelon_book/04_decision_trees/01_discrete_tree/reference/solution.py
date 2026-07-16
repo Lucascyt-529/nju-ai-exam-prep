@@ -1,5 +1,6 @@
-"""参考实现：离散特征决策树。"""
+"""参考实现：离散特征决策树与验证集剪枝。"""
 
+import copy
 from typing import Any
 
 import numpy as np
@@ -220,3 +221,154 @@ def predict_discrete_tree(tree: Tree, X: np.ndarray) -> np.ndarray:
     if not isinstance(tree, dict) or "is_leaf" not in tree or "prediction" not in tree:
         raise ValueError("tree不是有效的参考实现树节点")
     return np.asarray([_predict_one(tree, row) for row in X])
+
+
+def count_tree_nodes(tree: Tree) -> int:
+    if not isinstance(tree, dict) or "is_leaf" not in tree or "children" not in tree:
+        raise ValueError("tree不是有效的参考实现树节点")
+    if tree["is_leaf"]:
+        return 1
+    return 1 + sum(count_tree_nodes(child) for child in tree["children"].values())
+
+
+def _validate_validation_data(
+    X_validation: np.ndarray, y_validation: np.ndarray, n_features: int
+) -> None:
+    _validate_training_data(X_validation, y_validation)
+    if X_validation.shape[1] != n_features:
+        raise ValueError("训练集与验证集特征数必须一致")
+
+
+def _accuracy(predictions: np.ndarray, y: np.ndarray) -> float:
+    return float(np.mean(predictions == y))
+
+
+def _build_prepruned_tree(
+    X: np.ndarray,
+    y: np.ndarray,
+    X_validation: np.ndarray,
+    y_validation: np.ndarray,
+    available_features: np.ndarray,
+    feature_domains: list[np.ndarray],
+    criterion: str,
+) -> Tree:
+    prediction = majority_label(y)
+    if np.unique(y).size == 1 or available_features.size == 0:
+        return _leaf(prediction)
+    if y_validation.size == 0:
+        return _leaf(prediction)
+
+    variable_features = np.array(
+        [index for index in available_features if np.unique(X[:, index]).size > 1],
+        dtype=int,
+    )
+    if variable_features.size == 0:
+        return _leaf(prediction)
+
+    feature_index, score = choose_best_feature(
+        X, y, variable_features, criterion=criterion
+    )
+    leaf_predictions = np.full(y_validation.shape, prediction)
+    split_predictions = np.full(y_validation.shape, prediction)
+    for value in feature_domains[feature_index]:
+        train_selected = X[:, feature_index] == value
+        validation_selected = X_validation[:, feature_index] == value
+        if np.any(train_selected):
+            split_predictions[validation_selected] = majority_label(y[train_selected])
+
+    if _accuracy(split_predictions, y_validation) <= _accuracy(
+        leaf_predictions, y_validation
+    ):
+        return _leaf(prediction)
+
+    remaining = available_features[available_features != feature_index]
+    node: Tree = {
+        "is_leaf": False,
+        "prediction": prediction,
+        "feature_index": feature_index,
+        "criterion_score": score,
+        "children": {},
+    }
+    for value in feature_domains[feature_index]:
+        train_selected = X[:, feature_index] == value
+        validation_selected = X_validation[:, feature_index] == value
+        key = value.item()
+        if not np.any(train_selected):
+            node["children"][key] = _leaf(prediction)
+        else:
+            node["children"][key] = _build_prepruned_tree(
+                X[train_selected],
+                y[train_selected],
+                X_validation[validation_selected],
+                y_validation[validation_selected],
+                remaining,
+                feature_domains,
+                criterion,
+            )
+    return node
+
+
+def fit_prepruned_tree(
+    X: np.ndarray,
+    y: np.ndarray,
+    X_validation: np.ndarray,
+    y_validation: np.ndarray,
+    *,
+    criterion: str = "information_gain",
+) -> Tree:
+    """仅用训练集选择划分，用验证集决定是否保留划分。"""
+    _validate_training_data(X, y)
+    _validate_validation_data(X_validation, y_validation, X.shape[1])
+    if criterion not in VALID_CRITERIA:
+        raise ValueError(f"criterion必须属于{sorted(VALID_CRITERIA)}")
+    feature_domains = [np.unique(X[:, index]) for index in range(X.shape[1])]
+    available_features = np.arange(X.shape[1], dtype=int)
+    return _build_prepruned_tree(
+        X,
+        y,
+        X_validation,
+        y_validation,
+        available_features,
+        feature_domains,
+        criterion,
+    )
+
+
+def _post_prune_node(
+    node: Tree, X_validation: np.ndarray, y_validation: np.ndarray
+) -> Tree:
+    if node["is_leaf"]:
+        return node
+    if y_validation.size == 0:
+        return _leaf(node["prediction"])
+
+    feature_index = node["feature_index"]
+    for value, child in list(node["children"].items()):
+        selected = X_validation[:, feature_index] == value
+        node["children"][value] = _post_prune_node(
+            child, X_validation[selected], y_validation[selected]
+        )
+
+    subtree_predictions = np.asarray(
+        [_predict_one(node, row) for row in X_validation]
+    )
+    leaf_predictions = np.full(y_validation.shape, node["prediction"])
+    if _accuracy(leaf_predictions, y_validation) >= _accuracy(
+        subtree_predictions, y_validation
+    ):
+        return _leaf(node["prediction"])
+    return node
+
+
+def post_prune_tree(
+    tree: Tree, X_validation: np.ndarray, y_validation: np.ndarray
+) -> Tree:
+    """自底向上后剪枝，准确率相同时选择更小的叶节点。"""
+    _validate_prediction_data(X_validation)
+    _validate_labels(y_validation)
+    if X_validation.shape[0] != y_validation.size:
+        raise ValueError("验证集X与y样本数必须一致")
+    if not isinstance(tree, dict) or "is_leaf" not in tree or "prediction" not in tree:
+        raise ValueError("tree不是有效的参考实现树节点")
+    copied_tree = copy.deepcopy(tree)
+    return _post_prune_node(copied_tree, X_validation, y_validation)
