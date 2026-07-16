@@ -1,0 +1,5 @@
+bfs: 0 1 2 3
+dfs: 0 1 3 2
+components:
+0 1 2 3
+4 5
