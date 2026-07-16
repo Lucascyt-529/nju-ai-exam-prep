@@ -13,7 +13,8 @@
 | 第2章 模型评估与选择 | 交叉验证、折外预测与候选方案选择 | `03_cross_validation/README.md` | `03_cross_validation/reference/solution.py` | `03_cross_validation/starter.py` | `test_model_evaluation_cross_validation_reference.py` | 已验证 | 含7项测试；强调折内拟合隔离 |
 | 第2章 模型评估与选择 | 比较检验 | — | — | — | — | 未开始 | 后续覆盖假设检验、McNemar、Friedman/Nemenyi等 |
 | 第2章 模型评估与选择 | 偏差—方差分解 | — | — | — | — | 未开始 | 需要推导和可复现实验 |
-| 第3章 线性模型 | 线性回归与最小二乘 | — | — | — | — | 未开始 | NumPy 手写 |
+| 第3章 线性模型 | 线性回归预测、MSE、梯度、最小二乘与梯度下降 | `watermelon_book/03_linear_models/01_linear_regression/README.md` | `01_linear_regression/reference/solution.py` | `01_linear_regression/starter.py` | `test_linear_regression_reference.py` | 已验证 | 路径相对第3章目录；含10项测试 |
+| 第3章 线性模型 | 线性回归完整数据任务 | — | — | — | — | 未开始 | 下一检查点：训练/验证/预测/保存 |
 | 第3章 线性模型 | 对数几率回归、LDA、多分类 | — | — | — | — | 未开始 | NumPy 手写 |
 | 第4章 决策树 | 划分选择与树生成 | — | — | — | — | 未开始 | Python/NumPy 手写 |
 | 第4章 决策树 | 剪枝、连续值、缺失值、多变量树 | — | — | — | — | 未开始 | 分阶段实现 |
