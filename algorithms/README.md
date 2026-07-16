@@ -9,5 +9,5 @@
 | 3 | `03_hashing_sequences/`：频次、保序去重、两数配对与双运行方式 | 已建参考闭环 |
 | 4 | `04_graph_traversal/`：确定性BFS/DFS与连通分量 | 已建参考闭环 |
 | 5 | `05_grid_shortest_path/`：网格BFS、不可达与路径恢复 | 已建参考闭环 |
-| 6 | 非负权图Dijkstra | 待建设 |
+| 6 | `06_dijkstra_shortest_path/`：最小堆、陈旧条目与路径恢复 | 已建参考闭环 |
 | 7 | 动态规划基础 | 待建设 |
