@@ -48,7 +48,7 @@
 | 第8章 集成学习 | AdaBoost与加权决策树桩 | `watermelon_book/08_ensemble_learning/01_adaboost/README.md` | `01_adaboost/reference/solution.py` | `01_adaboost/starter.py` | `test_adaboost_reference.py` | 已验证 | 加权错误、分类器权重、样本权重更新、树桩枚举与强分类器；含20项测试，未替代学生作答 |
 | 第8章 集成学习 | Bootstrap、Bagging与OOB评估 | `watermelon_book/08_ensemble_learning/02_bagging_oob/README.md` | `02_bagging_oob/reference/solution.py` | `02_bagging_oob/starter.py` | `test_bagging_oob_reference.py` | 已验证 | 有放回索引、树桩Bagging、硬投票、OOB覆盖与准确率；含19项测试，未替代学生作答 |
 | 第8章 集成学习 | 随机森林 | `watermelon_book/08_ensemble_learning/03_random_forest/README.md` | `03_random_forest/reference/solution.py` | `03_random_forest/starter.py` | `test_random_forest_reference.py` | 已验证 | Bootstrap、随机候选特征、受限树桩、投票与预测相关性；含19项测试，未替代学生作答 |
-| 第8章 集成学习 | 结合策略与多样性 | — | — | — | — | 未开始 | 性质实验 |
+| 第8章 集成学习 | 结合策略与多样性 | `watermelon_book/08_ensemble_learning/04_combination_diversity/README.md` | `04_combination_diversity/reference/solution.py` | `04_combination_diversity/starter.py` | `test_ensemble_combination_diversity_reference.py` | 已验证 | 加权平均、硬/软投票、Q/相关/分歧/双错与回归误差-分歧；含19项测试，未替代学生作答 |
 | 第9章 聚类 | 距离度量与性能度量 | — | — | — | — | 未开始 | NumPy 实现 |
 | 第9章 聚类 | 原型、层次与密度聚类 | — | — | — | — | 未开始 | 代表算法手写 |
 | 第10章 降维与度量学习 | KNN、MDS、PCA | — | — | — | — | 未开始 | 核心算法手写 |
