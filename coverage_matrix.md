@@ -1,6 +1,6 @@
 # 《机器学习》覆盖矩阵
 
-当前矩阵依据建仓任务书中的16章主线建立。它是初始映射，不等同于已经覆盖；待确认教材版次后，还需要按实际目录细化到小节。
+当前矩阵依据建仓任务书中的16章主线建立。它是初始映射，不等同于已经覆盖；待确认教材版次后，还需要按实际目录细化到小节。当前建设优先级是第1～10章，第11～16章暂缓并保留为长期范围。
 
 状态只能使用：`未开始`、`已建骨架`、`已讲解`、`已实现待验证`、`已验证`、`学生已独立完成`。
 
@@ -33,7 +33,8 @@
 | 第5章 神经网络 | RBF网络 | `watermelon_book/05_neural_networks/06_rbf_network/README.md` | `06_rbf_network/reference/solution.py` | `06_rbf_network/starter.py` | `test_rbf_network_reference.py` | 已验证 | 高斯距离响应、显式中心/宽度、最小二乘或岭输出层、奇异设计矩阵；含18项测试，未替代学生作答 |
 | 第5章 神经网络 | SOM自组织映射 | `watermelon_book/05_neural_networks/07_som/README.md` | `07_som/reference/solution.py` | `07_som/starter.py` | `test_som_reference.py` | 已验证 | BMU、Gaussian一维拓扑邻域、非原地原型更新、衰减训练与量化误差；含25项测试，未替代学生作答 |
 | 第5章 神经网络 | ART1自适应共振 | `watermelon_book/05_neural_networks/08_art1/README.md` | `08_art1/reference/solution.py` | `08_art1/starter.py` | `test_art1_reference.py` | 已验证 | 二值选择分数、警戒检验、确定性重置搜索、交集原型与增量类别；含21项测试，未替代学生作答 |
-| 第5章 神经网络 | 其他常见网络 | — | — | — | — | 未开始 | 待按实际教材目录核对后建设级联相关、Elman与Boltzmann等代表性原理和实验 |
+| 第5章 神经网络 | Elman循环网络 | `watermelon_book/05_neural_networks/09_elman_network/README.md` | `09_elman_network/reference/solution.py` | `09_elman_network/starter.py` | `test_elman_network_reference.py` | 已验证 | 上下文隐状态、线性输出、整段/分段前向、状态续接与重置；含19项测试，未实现BPTT，未替代学生作答 |
+| 第5章 神经网络 | 其他常见网络 | — | — | — | — | 未开始 | 待按实际教材目录核对后建设级联相关与Boltzmann等代表性原理和实验 |
 | 第6章 支持向量机 | 间隔、对偶与核函数 | — | — | — | — | 未开始 | 核心版本手写 |
 | 第6章 支持向量机 | 软间隔、正则化、支持向量回归 | — | — | — | — | 未开始 | 推导与代表实现 |
 | 第7章 贝叶斯分类器 | 贝叶斯决策、极大似然、朴素贝叶斯 | — | — | — | — | 未开始 | Python/NumPy 手写 |
