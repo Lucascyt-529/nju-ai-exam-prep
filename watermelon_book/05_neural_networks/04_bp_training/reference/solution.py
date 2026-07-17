@@ -1,4 +1,4 @@
-"""参考实现：单隐层网络全批量BP训练与预测。"""
+"""参考实现：单隐层网络的标准BP、累积BP训练与预测。"""
 
 import numpy as np
 
@@ -202,6 +202,109 @@ def train_network(
         parameters = apply_gradients(parameters, gradients, float(learning_rate))
         cache = _forward_unchecked(X_float, parameters)
         history.append(_loss_from_logits(y_float, cache["z2"]))
+    return parameters, history
+
+
+def make_epoch_sample_orders(
+    n_samples: int,
+    epochs: int,
+    *,
+    shuffle: bool = False,
+    random_state: int = 0,
+) -> tuple[np.ndarray, ...]:
+    """生成标准BP每一轮的样本访问顺序。
+
+    同一个随机数生成器会跨轮持续使用，不能在每一轮重新用同一种子初始化，
+    否则每轮都会得到完全相同的伪随机顺序。
+    """
+    if not _is_integer(n_samples) or n_samples <= 0:
+        raise ValueError("n_samples必须是正整数")
+    if not _is_integer(epochs) or epochs < 0:
+        raise ValueError("epochs必须是非负整数")
+    if not isinstance(shuffle, (bool, np.bool_)):
+        raise ValueError("shuffle必须是布尔值")
+    if not _is_integer(random_state):
+        raise ValueError("random_state必须是整数")
+
+    generator = np.random.default_rng(int(random_state))
+    orders: list[np.ndarray] = []
+    for _ in range(int(epochs)):
+        if bool(shuffle):
+            order = generator.permutation(int(n_samples))
+        else:
+            order = np.arange(int(n_samples))
+        orders.append(order)
+    return tuple(orders)
+
+
+def train_network_accumulated_bp(
+    X: np.ndarray,
+    y_column: np.ndarray,
+    *,
+    n_hidden: int,
+    learning_rate: float,
+    epochs: int,
+    seed: int = 0,
+) -> tuple[dict[str, np.ndarray], list[float]]:
+    """累积BP：每轮先求整个训练集的平均梯度，再更新一次参数。"""
+    return train_network(
+        X,
+        y_column,
+        n_hidden=n_hidden,
+        learning_rate=learning_rate,
+        epochs=epochs,
+        seed=seed,
+    )
+
+
+def train_network_standard_bp(
+    X: np.ndarray,
+    y_column: np.ndarray,
+    *,
+    n_hidden: int,
+    learning_rate: float,
+    epochs: int,
+    seed: int = 0,
+    shuffle: bool = False,
+    random_state: int = 0,
+) -> tuple[dict[str, np.ndarray], list[float]]:
+    """标准BP：每处理一个样本就立即计算梯度并更新一次参数。
+
+    为便于与累积BP公平比较，历史仍按完整训练轮记录：第0项是初始的
+    全训练集损失，之后每一项是完成一整轮逐样本更新后的全训练集损失。
+    """
+    _validate_X_y(X, y_column)
+    if not _is_integer(n_hidden) or n_hidden <= 0:
+        raise ValueError("n_hidden必须是正整数")
+    if not _is_finite_scalar(learning_rate) or learning_rate <= 0:
+        raise ValueError("learning_rate必须是正有限数值")
+    if not _is_integer(epochs) or epochs < 0:
+        raise ValueError("epochs必须是非负整数")
+    if not _is_integer(seed):
+        raise ValueError("seed必须是整数")
+
+    orders = make_epoch_sample_orders(
+        X.shape[0],
+        int(epochs),
+        shuffle=shuffle,
+        random_state=random_state,
+    )
+    X_float = X.astype(float, copy=True)
+    y_float = y_column.astype(float, copy=True)
+    parameters = initialize_parameters(X.shape[1], int(n_hidden), seed=int(seed))
+    full_cache = _forward_unchecked(X_float, parameters)
+    history = [_loss_from_logits(y_float, full_cache["z2"])]
+
+    for order in orders:
+        for sample_index in order:
+            index = int(sample_index)
+            X_one = X_float[index : index + 1]
+            y_one = y_float[index : index + 1]
+            sample_cache = _forward_unchecked(X_one, parameters)
+            gradients = _backward_unchecked(parameters, sample_cache, y_one)
+            parameters = apply_gradients(parameters, gradients, float(learning_rate))
+        full_cache = _forward_unchecked(X_float, parameters)
+        history.append(_loss_from_logits(y_float, full_cache["z2"]))
     return parameters, history
 
 

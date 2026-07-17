@@ -181,6 +181,10 @@ def test_guided_demo_trains_xor_end_to_end() -> None:
         capture_output=True,
         check=True,
     )
+    assert "standard BP sample orders:" in result.stdout
+    assert "standard BP losses:" in result.stdout
+    assert "accumulated BP losses:" in result.stdout
+    assert "same W1 after two epochs: False" in result.stdout
     assert "X / y: (4, 2) (4, 1)" in result.stdout
     assert "history length: 2001" in result.stdout
     assert "prediction: [0 1 1 0]" in result.stdout
