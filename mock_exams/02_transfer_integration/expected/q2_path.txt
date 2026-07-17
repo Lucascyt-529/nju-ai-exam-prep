@@ -1,0 +1,2 @@
+distance=13.000000
+path=A->C->B->D->E->F
