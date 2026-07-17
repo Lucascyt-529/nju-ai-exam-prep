@@ -62,6 +62,7 @@
 | 第10章 降维与度量学习 | PCA | `watermelon_book/10_dimensionality_reduction/03_pca/README.md` | `03_pca/reference/solution.py` | `03_pca/starter.py` | `test_pca_reference.py` | 已验证 | axis=0中心化、协方差谱、解释方差、投影逆变换与重构；含23项测试，未替代学生作答 |
 | 第10章 降维与度量学习 | 核PCA | `watermelon_book/10_dimensionality_reduction/04_kernel_pca/README.md` | `04_kernel_pca/reference/solution.py` | `04_kernel_pca/starter.py` | `test_kernel_pca_reference.py` | 已验证 | 线性/多项式/RBF核、训练中心化、正谱坐标与新样本投影；含20项测试，未替代学生作答 |
 | 第10章 降维与度量学习 | Isomap流形学习 | `watermelon_book/10_dimensionality_reduction/05_isomap/README.md` | `05_isomap/reference/solution.py` | `05_isomap/starter.py` | `test_isomap_reference.py` | 已验证 | 稳定k近邻图、并集对称化、Floyd测地距离、断图与MDS；含21项测试，未替代学生作答 |
+| 第10章 降维与度量学习 | LLE流形学习 | `watermelon_book/10_dimensionality_reduction/07_lle/README.md` | `07_lle/reference/solution.py` | `07_lle/starter.py` | `test_lle_reference.py` | 已验证 | 稳定近邻、局部和为1重构权重、谱嵌入与坐标约束；含20项测试，未替代学生作答 |
 | 第10章 降维与度量学习 | 成对约束度量学习 | `watermelon_book/10_dimensionality_reduction/06_metric_learning/README.md` | `06_metric_learning/reference/solution.py` | `06_metric_learning/starter.py` | `test_metric_learning_reference.py` | 已验证 | Mahalanobis距离、同/异类成对目标、PSD投影和回溯优化；含18项测试，未替代学生作答 |
 | 第11章 特征选择与稀疏学习 | 子集搜索、过滤式与包裹式选择 | — | — | — | — | 未开始 | 核心方法实现 |
 | 第11章 特征选择与稀疏学习 | L1、字典学习与压缩感知 | — | — | — | — | 未开始 | 推导和实验 |
