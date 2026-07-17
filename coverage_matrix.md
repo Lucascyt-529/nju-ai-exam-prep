@@ -37,7 +37,7 @@
 | 第5章 神经网络 | 其他常见网络 | — | — | — | — | 未开始 | 待按实际教材目录核对后建设级联相关与Boltzmann等代表性原理和实验 |
 | 第6章 支持向量机 | 超平面、函数间隔与几何间隔 | `watermelon_book/06_support_vector_machines/01_margin_geometry/README.md` | `01_margin_geometry/reference/solution.py` | `01_margin_geometry/starter.py` | `test_svm_margin_geometry_reference.py` | 已验证 | 得分、点到超平面距离、正比例缩放不变性、规范化和最小间隔点；含19项测试，未替代学生作答 |
 | 第6章 支持向量机 | 线性对偶优化与SMO | `watermelon_book/06_support_vector_machines/02_linear_smo/README.md` | `02_linear_smo/reference/solution.py` | `02_linear_smo/starter.py` | `test_svm_linear_smo_reference.py` | 已验证 | Gram矩阵、盒/等式约束、确定性成对更新、退化端点、KKT与原始-对偶目标；含20项测试，未替代学生作答 |
-| 第6章 支持向量机 | 核函数与非线性分类 | — | — | — | — | 未开始 | 在线性SMO基础上扩展核矩阵和预测 |
+| 第6章 支持向量机 | 核函数与非线性分类 | `watermelon_book/06_support_vector_machines/04_kernel_svm/README.md` | `04_kernel_svm/reference/solution.py` | `04_kernel_svm/starter.py` | `test_svm_kernel_reference.py` | 已验证 | 线性/多项式/RBF核、核化SMO与仅支持向量预测；含24项测试，未替代学生作答 |
 | 第6章 支持向量机 | 软间隔、松弛变量、hinge损失与C | `watermelon_book/06_support_vector_machines/03_soft_margin/README.md` | `03_soft_margin/reference/solution.py` | `03_soft_margin/starter.py` | `test_svm_soft_margin_reference.py` | 已验证 | 样本间隔区域、alpha状态、KKT映射与多个C的目标分量实验；含24项测试，未替代学生作答 |
 | 第6章 支持向量机 | 支持向量回归 | — | — | — | — | 未开始 | 推导与代表实现 |
 | 第7章 贝叶斯分类器 | 贝叶斯决策、极大似然、朴素贝叶斯 | — | — | — | — | 未开始 | Python/NumPy 手写 |
