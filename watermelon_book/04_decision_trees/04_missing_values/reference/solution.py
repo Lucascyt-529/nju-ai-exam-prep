@@ -7,6 +7,7 @@ import numpy as np
 
 Model = dict[str, Any]
 Node = dict[str, Any]
+VALID_FEATURE_TYPES = {"discrete", "continuous"}
 
 
 def _validate_y_and_weights(y: np.ndarray, sample_weights: np.ndarray) -> None:
@@ -91,6 +92,69 @@ def missing_information_gain(
     return float(known_ratio * (parent_entropy - conditional))
 
 
+def continuous_missing_information_gain(
+    feature: np.ndarray,
+    y: np.ndarray,
+    threshold: float,
+    sample_weights: np.ndarray | None = None,
+) -> float:
+    """只在非缺失样本上计算连续二分增益，再乘有效权重比例。"""
+    weights = np.ones(y.shape, dtype=float) if sample_weights is None else sample_weights
+    _validate_y_and_weights(y, weights); _validate_feature(feature, y.size)
+    if not np.isscalar(threshold) or not np.isfinite(threshold):
+        raise ValueError("threshold必须是有限标量")
+    known = ~np.isnan(feature) & (weights > 0)
+    left = known & (feature <= float(threshold)); right = known & ~left
+    if weights[left].sum() <= 0 or weights[right].sum() <= 0:
+        raise ValueError("threshold必须把非缺失正权重样本分成两个分支")
+    known_weight = weights[known].sum(); known_ratio = known_weight / weights.sum()
+    conditional = (
+        weights[left].sum() / known_weight * weighted_entropy(y[left], weights[left])
+        + weights[right].sum() / known_weight * weighted_entropy(y[right], weights[right])
+    )
+    return float(known_ratio * (weighted_entropy(y[known], weights[known]) - conditional))
+
+
+def best_continuous_missing_split(
+    feature: np.ndarray,
+    y: np.ndarray,
+    sample_weights: np.ndarray | None = None,
+) -> tuple[float, float]:
+    weights = np.ones(y.shape, dtype=float) if sample_weights is None else sample_weights
+    _validate_y_and_weights(y, weights); _validate_feature(feature, y.size)
+    known_values = np.unique(feature[~np.isnan(feature) & (weights > 0)])
+    if known_values.size < 2:
+        raise ValueError("非缺失正权重样本必须至少包含两个连续取值")
+    thresholds = (known_values[:-1] + known_values[1:]) / 2.0
+    gains = np.array([
+        continuous_missing_information_gain(feature, y, threshold, weights)
+        for threshold in thresholds
+    ])
+    position = int(np.argmax(gains))
+    return float(thresholds[position]), float(gains[position])
+
+
+def continuous_branch_weight_plan(
+    feature: np.ndarray,
+    sample_weights: np.ndarray,
+    threshold: float,
+) -> tuple[np.ndarray, np.ndarray]:
+    """返回左右分支比例和逐样本权重计划，列0/1分别为left/right。"""
+    dummy_y = np.zeros(sample_weights.shape, dtype=int)
+    _validate_y_and_weights(dummy_y, sample_weights); _validate_feature(feature, sample_weights.size)
+    if not np.isscalar(threshold) or not np.isfinite(threshold):
+        raise ValueError("threshold必须是有限标量")
+    known = ~np.isnan(feature) & (sample_weights > 0); missing = np.isnan(feature)
+    left = known & (feature <= float(threshold)); right = known & ~left
+    masses = np.array([sample_weights[left].sum(), sample_weights[right].sum()])
+    if np.any(masses <= 0):
+        raise ValueError("threshold必须产生两个正权重已知分支")
+    proportions = masses / masses.sum(); plan = np.zeros((feature.size, 2), dtype=float)
+    plan[left, 0] = sample_weights[left]; plan[right, 1] = sample_weights[right]
+    plan[missing] = sample_weights[missing, None] * proportions[None, :]
+    return proportions, plan
+
+
 def _class_probabilities(
     y: np.ndarray, weights: np.ndarray, classes: np.ndarray
 ) -> np.ndarray:
@@ -114,6 +178,7 @@ def _build(
     weights: np.ndarray,
     available_features: tuple[int, ...],
     classes: np.ndarray,
+    feature_types: tuple[str, ...],
 ) -> Node:
     positive = weights > 0
     if np.unique(y[positive]).size == 1 or not available_features:
@@ -121,38 +186,65 @@ def _build(
     candidates = []
     for index in available_features:
         known_positive = ~np.isnan(X[:, index]) & positive
-        if np.unique(X[known_positive, index]).size >= 2:
-            candidates.append((missing_information_gain(X[:, index], y, weights), index))
+        if np.unique(X[known_positive, index]).size < 2:
+            continue
+        if feature_types[index] == "discrete":
+            candidates.append((missing_information_gain(X[:, index], y, weights), index, None))
+        else:
+            threshold, gain = best_continuous_missing_split(X[:, index], y, weights)
+            candidates.append((gain, index, threshold))
     if not candidates:
         return _leaf(y, weights, classes)
-    gain, feature_index = max(candidates, key=lambda item: (item[0], -item[1]))
-    values, proportions, plan = branch_weight_plan(X[:, feature_index], weights)
+    gain, feature_index, threshold = max(
+        candidates,
+        key=lambda item: (item[0], -item[1], -(item[2] if item[2] is not None else 0.0)),
+    )
+    split_type = feature_types[feature_index]
+    if split_type == "discrete":
+        values, proportions, plan = branch_weight_plan(X[:, feature_index], weights)
+        branch_keys: tuple[Any, ...] = tuple(value.item() for value in values)
+    else:
+        proportions, plan = continuous_branch_weight_plan(
+            X[:, feature_index], weights, threshold
+        )
+        values = None; branch_keys = ("left", "right")
     node: Node = {
         "is_leaf": False,
         "prediction": classes[np.argmax(_class_probabilities(y, weights, classes))].item(),
         "class_probabilities": _class_probabilities(y, weights, classes),
         "feature_index": feature_index,
+        "split_type": split_type,
+        "threshold": threshold,
         "information_gain": gain,
         "branch_values": values,
+        "branch_keys": branch_keys,
         "branch_probabilities": proportions,
         "children": {},
     }
-    remaining = tuple(value for value in available_features if value != feature_index)
-    for column, value in enumerate(values):
+    remaining = (
+        tuple(value for value in available_features if value != feature_index)
+        if split_type == "discrete" else available_features
+    )
+    for column, branch_key in enumerate(branch_keys):
         branch_weights = plan[:, column]
         selected = branch_weights > 0
-        node["children"][value.item()] = _build(
+        node["children"][branch_key] = _build(
             X[selected],
             y[selected],
             branch_weights[selected],
             remaining,
             classes,
+            feature_types,
         )
     return node
 
 
 def fit_missing_value_tree(
-    X: np.ndarray, y: np.ndarray, sample_weights: np.ndarray | None = None
+    X: np.ndarray,
+    y: np.ndarray,
+    sample_weights: np.ndarray | None = None,
+    *,
+    feature_types: list[str] | None = None,
 ) -> Model:
     weights = np.ones(y.shape, dtype=float) if sample_weights is None else sample_weights.copy()
     _validate_y_and_weights(y, weights)
@@ -160,9 +252,14 @@ def fit_missing_value_tree(
         raise ValueError("X必须是与y样本数一致的非空二维数组")
     if not np.issubdtype(X.dtype, np.number) or np.any(np.isinf(X)):
         raise ValueError("X只能包含有限数值或np.nan")
+    types = ["discrete"] * X.shape[1] if feature_types is None else feature_types
+    if (not isinstance(types, list) or len(types) != X.shape[1]
+            or any(value not in VALID_FEATURE_TYPES for value in types)):
+        raise ValueError(f"feature_types必须逐列属于{sorted(VALID_FEATURE_TYPES)}")
     classes = np.unique(y)
-    root = _build(X, y, weights, tuple(range(X.shape[1])), classes)
-    return {"classes": classes, "n_features": X.shape[1], "root": root}
+    type_tuple = tuple(types)
+    root = _build(X, y, weights, tuple(range(X.shape[1])), classes, type_tuple)
+    return {"classes": classes, "n_features": X.shape[1], "feature_types": type_tuple, "root": root}
 
 
 def _predict_distribution(node: Node, row: np.ndarray) -> np.ndarray:
@@ -171,13 +268,16 @@ def _predict_distribution(node: Node, row: np.ndarray) -> np.ndarray:
     value = row[node["feature_index"]]
     if np.isnan(value):
         result = np.zeros_like(node["class_probabilities"])
-        for branch_value, proportion in zip(
-            node["branch_values"], node["branch_probabilities"]
+        for branch_key, proportion in zip(
+            node["branch_keys"], node["branch_probabilities"], strict=True
         ):
             result += proportion * _predict_distribution(
-                node["children"][branch_value.item()], row
+                node["children"][branch_key], row
             )
         return result
+    if node["split_type"] == "continuous":
+        branch_key = "left" if value <= node["threshold"] else "right"
+        return _predict_distribution(node["children"][branch_key], row)
     child = node["children"].get(value.item())
     return node["class_probabilities"] if child is None else _predict_distribution(child, row)
 

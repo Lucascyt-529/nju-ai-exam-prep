@@ -24,7 +24,10 @@ def test_candidate_thresholds_use_sorted_distinct_midpoints() -> None:
     np.testing.assert_allclose(solution.candidate_thresholds(np.array([5.0, 1.0, 1.0, 3.0])), [2.0, 4.0])
 
 
-@pytest.mark.parametrize("criterion, expected", [("information_gain", 1.0), ("gini", 0.0)])
+@pytest.mark.parametrize(
+    "criterion, expected",
+    [("information_gain", 1.0), ("gain_ratio", 1.0), ("gini", 0.0)],
+)
 def test_perfect_continuous_split_is_hand_checkable(criterion: str, expected: float) -> None:
     feature = np.array([1.0, 2.0, 3.0, 4.0])
     y = np.array([0, 0, 1, 1])
@@ -40,7 +43,7 @@ def test_equal_threshold_scores_choose_smaller_threshold() -> None:
     assert threshold == pytest.approx(1.5)
 
 
-@pytest.mark.parametrize("criterion", ["information_gain", "gini"])
+@pytest.mark.parametrize("criterion", ["information_gain", "gain_ratio", "gini"])
 def test_continuous_feature_can_be_reused_for_three_intervals(criterion: str) -> None:
     X = np.arange(1.0, 7.0).reshape(-1, 1)
     y = np.array([10, 10, 20, 20, 30, 30])
@@ -62,6 +65,28 @@ def test_mixed_tree_uses_discrete_and_continuous_nodes() -> None:
     y = np.array([0, 1, 1, 2, 2, 3])
     tree = solution.fit_mixed_tree(X, y, ["discrete", "continuous"])
     np.testing.assert_array_equal(solution.predict_mixed_tree(tree, X), y)
+
+
+def test_continuous_gain_ratio_matches_gain_over_binary_intrinsic_value() -> None:
+    feature = np.arange(1.0, 6.0)
+    y = np.array([0, 0, 1, 1, 1])
+    threshold = 2.5
+    gain = solution.continuous_split_score(feature, y, threshold, criterion="information_gain")
+    ratio = solution.continuous_split_score(feature, y, threshold, criterion="gain_ratio")
+    p_left = 2 / 5
+    intrinsic = -(p_left * np.log2(p_left) + (1 - p_left) * np.log2(1 - p_left))
+    assert ratio == pytest.approx(gain / intrinsic)
+
+
+def test_gain_ratio_tree_uses_average_gain_filter_before_ratio() -> None:
+    # feature 1隔离一个正例，原始增益率更高但信息增益低于候选平均值。
+    y = np.array([1, 1, 1, 0, 1, 0, 0, 0, 0, 0])
+    feature_high_gain = np.array([0, 0, 0, 0, 1, 1, 1, 1, 1, 1])
+    feature_high_ratio_low_gain = np.array([1, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+    X = np.column_stack((feature_high_gain, feature_high_ratio_low_gain)).astype(float)
+    tree = solution.fit_mixed_tree(X, y, ["discrete", "discrete"], criterion="gain_ratio")
+    assert tree["feature_index"] == 0
+    assert tree["information_gain"] > 0
 
 
 def test_unseen_discrete_value_falls_back_to_node_majority() -> None:

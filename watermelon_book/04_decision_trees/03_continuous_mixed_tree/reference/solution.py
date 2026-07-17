@@ -6,7 +6,7 @@ import numpy as np
 
 
 Tree = dict[str, Any]
-VALID_CRITERIA = {"information_gain", "gini"}
+VALID_CRITERIA = {"information_gain", "gain_ratio", "gini"}
 VALID_FEATURE_TYPES = {"continuous", "discrete"}
 
 
@@ -68,9 +68,14 @@ def continuous_split_score(
     left = feature <= float(threshold)
     if not np.any(left) or np.all(left):
         raise ValueError("threshold必须产生两个非空子集")
-    impurity = _entropy if criterion == "information_gain" else _gini
-    weighted = left.mean() * impurity(y[left]) + (~left).mean() * impurity(y[~left])
-    return _entropy(y) - weighted if criterion == "information_gain" else weighted
+    if criterion == "gini":
+        return float(left.mean() * _gini(y[left]) + (~left).mean() * _gini(y[~left]))
+    weighted_entropy = left.mean() * _entropy(y[left]) + (~left).mean() * _entropy(y[~left])
+    gain = _entropy(y) - weighted_entropy
+    if criterion == "information_gain":
+        return float(gain)
+    intrinsic_value = _entropy(left.astype(int))
+    return 0.0 if intrinsic_value == 0 else float(gain / intrinsic_value)
 
 
 def best_continuous_split(
@@ -83,17 +88,23 @@ def best_continuous_split(
     scores = np.array(
         [continuous_split_score(feature, y, value, criterion=criterion) for value in thresholds]
     )
-    position = int(np.argmax(scores) if criterion == "information_gain" else np.argmin(scores))
+    position = int(np.argmin(scores) if criterion == "gini" else np.argmax(scores))
     return float(thresholds[position]), float(scores[position])
 
 
 def _discrete_score(feature: np.ndarray, y: np.ndarray, criterion: str) -> float:
-    impurity = _entropy if criterion == "information_gain" else _gini
+    impurity = _gini if criterion == "gini" else _entropy
     weighted = 0.0
     for value in np.unique(feature):
         selected = feature == value
         weighted += selected.mean() * impurity(y[selected])
-    return _entropy(y) - weighted if criterion == "information_gain" else weighted
+    if criterion == "gini":
+        return float(weighted)
+    gain = _entropy(y) - weighted
+    if criterion == "information_gain":
+        return float(gain)
+    intrinsic_value = _entropy(feature)
+    return 0.0 if intrinsic_value == 0 else float(gain / intrinsic_value)
 
 
 def _leaf(prediction) -> Tree:
@@ -117,18 +128,28 @@ def _build(
         if feature_type == "discrete":
             if index not in available_discrete or np.unique(X[:, index]).size < 2:
                 continue
-            candidates.append((index, None, _discrete_score(X[:, index], y, criterion)))
+            score = _discrete_score(X[:, index], y, criterion)
+            gain = _discrete_score(X[:, index], y, "information_gain")
+            candidates.append((index, None, score, gain))
         elif np.unique(X[:, index]).size >= 2:
             threshold, score = best_continuous_split(X[:, index], y, criterion=criterion)
-            candidates.append((index, threshold, score))
+            gain = continuous_split_score(
+                X[:, index], y, threshold, criterion="information_gain"
+            )
+            candidates.append((index, threshold, score, gain))
     if not candidates:
         return _leaf(prediction)
 
+    threshold_key = lambda item: float("-inf") if item[1] is None else float(item[1])
     if criterion == "information_gain":
-        best = max(candidates, key=lambda item: (item[2], -item[0], -(item[1] or 0.0)))
+        best = max(candidates, key=lambda item: (item[2], -item[0], -threshold_key(item)))
+    elif criterion == "gini":
+        best = min(candidates, key=lambda item: (item[2], item[0], threshold_key(item)))
     else:
-        best = min(candidates, key=lambda item: (item[2], item[0], item[1] or 0.0))
-    feature_index, threshold, score = best
+        mean_gain = float(np.mean([item[3] for item in candidates]))
+        eligible = [item for item in candidates if item[3] >= mean_gain - 1e-12]
+        best = max(eligible, key=lambda item: (item[2], -item[0], -threshold_key(item)))
+    feature_index, threshold, score, gain = best
     feature_type = feature_types[feature_index]
     node: Tree = {
         "is_leaf": False,
@@ -137,6 +158,7 @@ def _build(
         "split_type": feature_type,
         "threshold": threshold,
         "criterion_score": score,
+        "information_gain": gain,
         "children": {},
     }
 
