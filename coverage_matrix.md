@@ -32,7 +32,8 @@
 | 第5章 神经网络 | 全局最小、局部极小与初始化 | `watermelon_book/05_neural_networks/05_optimization_landscape/README.md` | `05_optimization_landscape/reference/solution.py` | `05_optimization_landscape/starter.py` | `test_optimization_landscape_reference.py` | 已验证 | 可穷尽驻点的一维双井、二阶分类、深浅极小与多初值吸引域；含22项测试，未替代学生作答 |
 | 第5章 神经网络 | RBF网络 | `watermelon_book/05_neural_networks/06_rbf_network/README.md` | `06_rbf_network/reference/solution.py` | `06_rbf_network/starter.py` | `test_rbf_network_reference.py` | 已验证 | 高斯距离响应、显式中心/宽度、最小二乘或岭输出层、奇异设计矩阵；含18项测试，未替代学生作答 |
 | 第5章 神经网络 | SOM自组织映射 | `watermelon_book/05_neural_networks/07_som/README.md` | `07_som/reference/solution.py` | `07_som/starter.py` | `test_som_reference.py` | 已验证 | BMU、Gaussian一维拓扑邻域、非原地原型更新、衰减训练与量化误差；含25项测试，未替代学生作答 |
-| 第5章 神经网络 | 其他常见网络 | — | — | — | — | 未开始 | 待按实际教材目录核对后建设ART、级联相关、Elman与Boltzmann等代表性原理和实验 |
+| 第5章 神经网络 | ART1自适应共振 | `watermelon_book/05_neural_networks/08_art1/README.md` | `08_art1/reference/solution.py` | `08_art1/starter.py` | `test_art1_reference.py` | 已验证 | 二值选择分数、警戒检验、确定性重置搜索、交集原型与增量类别；含21项测试，未替代学生作答 |
+| 第5章 神经网络 | 其他常见网络 | — | — | — | — | 未开始 | 待按实际教材目录核对后建设级联相关、Elman与Boltzmann等代表性原理和实验 |
 | 第6章 支持向量机 | 间隔、对偶与核函数 | — | — | — | — | 未开始 | 核心版本手写 |
 | 第6章 支持向量机 | 软间隔、正则化、支持向量回归 | — | — | — | — | 未开始 | 推导与代表实现 |
 | 第7章 贝叶斯分类器 | 贝叶斯决策、极大似然、朴素贝叶斯 | — | — | — | — | 未开始 | Python/NumPy 手写 |
