@@ -54,7 +54,8 @@
 | 第9章 聚类 | LVQ监督原型学习 | `watermelon_book/09_clustering/03_lvq/README.md` | `03_lvq/reference/solution.py` | `03_lvq/starter.py` | `test_lvq_reference.py` | 已验证 | 分层原型初始化、最近原型、正确靠近/错误远离、衰减训练与预测；含18项测试，未替代学生作答 |
 | 第9章 聚类 | AGNES层次聚类 | `watermelon_book/09_clustering/04_agnes/README.md` | `04_agnes/reference/solution.py` | `04_agnes/starter.py` | `test_agnes_reference.py` | 已验证 | 单/全/平均链接、确定性合并、成员/距离历史与目标簇标签；含25项测试，未替代学生作答 |
 | 第9章 聚类 | DBSCAN密度聚类 | `watermelon_book/09_clustering/05_dbscan/README.md` | `05_dbscan/reference/solution.py` | `05_dbscan/starter.py` | `test_dbscan_reference.py` | 已验证 | 闭邻域、自身计数、核心/边界/噪声、确定性密度扩展；含26项测试，未替代学生作答 |
-| 第10章 降维与度量学习 | KNN、MDS、PCA | — | — | — | — | 未开始 | 核心算法手写 |
+| 第10章 降维与度量学习 | kNN分类与回归 | `watermelon_book/10_dimensionality_reduction/01_knn/README.md` | `01_knn/reference/solution.py` | `01_knn/starter.py` | `test_knn_reference.py` | 已验证 | `(n_query,n_train)`距离、稳定邻居、均匀/距离权重、平局与零距离；含27项测试，未替代学生作答 |
+| 第10章 降维与度量学习 | MDS、PCA | — | — | — | — | 未开始 | 核心算法手写 |
 | 第10章 降维与度量学习 | 核化、流形学习与度量学习 | — | — | — | — | 未开始 | 代表方法和实验 |
 | 第11章 特征选择与稀疏学习 | 子集搜索、过滤式与包裹式选择 | — | — | — | — | 未开始 | 核心方法实现 |
 | 第11章 特征选择与稀疏学习 | L1、字典学习与压缩感知 | — | — | — | — | 未开始 | 推导和实验 |
