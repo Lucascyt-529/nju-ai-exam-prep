@@ -17,3 +17,30 @@ def pairwise_contingency(y: np.ndarray, prediction_a: np.ndarray, prediction_b: 
 
 def regression_error_ambiguity(y: np.ndarray, predictions: np.ndarray) -> dict[str, np.ndarray]:
     raise NotImplementedError("请完成 regression_error_ambiguity")
+
+
+def bootstrap_index_matrix(n_samples: int, n_learners: int, *,
+                           random_state: int = 0) -> np.ndarray:
+    raise NotImplementedError("请完成 bootstrap_index_matrix")
+
+
+def random_feature_subspaces(n_features: int, n_learners: int, subspace_size: int, *,
+                             random_state: int = 0) -> np.ndarray:
+    raise NotImplementedError("请完成 random_feature_subspaces")
+
+
+def flipped_label_copies(y: np.ndarray, n_learners: int, *,
+                         flip_fraction: float = 0.1,
+                         random_state: int = 0) -> np.ndarray:
+    raise NotImplementedError("请完成 flipped_label_copies")
+
+
+def random_parameter_seeds(n_learners: int, *, random_state: int = 0) -> np.ndarray:
+    raise NotImplementedError("请完成 random_parameter_seeds")
+
+
+def diversity_perturbation_plan(n_samples: int, n_features: int, y: np.ndarray, *,
+                                n_learners: int, subspace_size: int,
+                                flip_fraction: float = 0.1,
+                                random_state: int = 0) -> dict[str, np.ndarray]:
+    raise NotImplementedError("请完成 diversity_perturbation_plan")

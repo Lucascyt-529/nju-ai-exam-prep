@@ -1,5 +1,6 @@
 """参考实现：平均/投票、成对多样性与误差-分歧分解。"""
 
+from numbers import Real
 import numpy as np
 
 
@@ -73,3 +74,89 @@ def regression_error_ambiguity(y: np.ndarray, predictions: np.ndarray) -> dict[s
     ensemble_error = (ensemble-y)**2
     return {"ensemble_prediction": ensemble, "mean_individual_error": individual_error,
             "ambiguity": ambiguity, "ensemble_error": ensemble_error}
+
+
+def _positive_integer(value: int, name: str) -> int:
+    if isinstance(value, (bool, np.bool_)) or not isinstance(value, (int, np.integer)) or value <= 0:
+        raise ValueError(f"{name}必须是正整数")
+    return int(value)
+
+
+def _random_state(random_state: int) -> int:
+    if isinstance(random_state, (bool, np.bool_)) or not isinstance(random_state, (int, np.integer)):
+        raise ValueError("random_state必须是整数")
+    return int(random_state)
+
+
+def bootstrap_index_matrix(n_samples: int, n_learners: int, *,
+                           random_state: int = 0) -> np.ndarray:
+    """数据样本扰动：每个学习器得到一份有放回样本下标。"""
+    n = _positive_integer(n_samples, "n_samples"); learners = _positive_integer(n_learners, "n_learners")
+    rng = np.random.default_rng(_random_state(random_state))
+    return rng.integers(0, n, size=(learners, n))
+
+
+def random_feature_subspaces(n_features: int, n_learners: int, subspace_size: int, *,
+                             random_state: int = 0) -> np.ndarray:
+    """输入属性扰动：为每个学习器无放回选择并排序特征下标。"""
+    features = _positive_integer(n_features, "n_features")
+    learners = _positive_integer(n_learners, "n_learners")
+    size = _positive_integer(subspace_size, "subspace_size")
+    if size > features:
+        raise ValueError("subspace_size不能大于n_features")
+    rng = np.random.default_rng(_random_state(random_state))
+    return np.vstack([np.sort(rng.choice(features, size=size, replace=False)) for _ in range(learners)])
+
+
+def _label_vector(y: np.ndarray) -> np.ndarray:
+    if not isinstance(y, np.ndarray) or y.ndim != 1 or y.size == 0:
+        raise ValueError("y必须是非空一维数组")
+    if y.dtype.kind in "fc" and not np.all(np.isfinite(y)):
+        raise ValueError("y不能包含非有限值")
+    if len(np.unique(y)) < 2:
+        raise ValueError("标签扰动至少需要两个类别")
+    return y
+
+
+def flipped_label_copies(y: np.ndarray, n_learners: int, *,
+                         flip_fraction: float = 0.1,
+                         random_state: int = 0) -> np.ndarray:
+    """输出表示扰动：每份标签精确翻转round(n*fraction)个位置到其他类别。"""
+    labels = _label_vector(y); learners = _positive_integer(n_learners, "n_learners")
+    if (isinstance(flip_fraction, (bool, np.bool_)) or not isinstance(flip_fraction, Real)
+            or not np.isfinite(flip_fraction) or not 0 <= flip_fraction <= 1):
+        raise ValueError("flip_fraction必须位于[0,1]")
+    rng = np.random.default_rng(_random_state(random_state)); classes = np.unique(labels)
+    copies = np.tile(labels, (learners, 1)); n_flip = int(round(len(labels) * float(flip_fraction)))
+    for learner in range(learners):
+        indices = rng.choice(len(labels), size=n_flip, replace=False)
+        for index in indices:
+            alternatives = classes[classes != labels[index]]
+            copies[learner, index] = rng.choice(alternatives)
+    return copies
+
+
+def random_parameter_seeds(n_learners: int, *, random_state: int = 0) -> np.ndarray:
+    """算法参数扰动入口：为每个基学习器生成独立初始化种子。"""
+    learners = _positive_integer(n_learners, "n_learners")
+    rng = np.random.default_rng(_random_state(random_state))
+    return rng.integers(0, np.iinfo(np.uint32).max, size=learners, dtype=np.uint32)
+
+
+def diversity_perturbation_plan(n_samples: int, n_features: int, y: np.ndarray, *,
+                                n_learners: int, subspace_size: int,
+                                flip_fraction: float = 0.1,
+                                random_state: int = 0) -> dict[str, np.ndarray]:
+    """用一个主种子派生四类可复现扰动，便于审计每个学习器得到的差异。"""
+    if len(_label_vector(y)) != n_samples:
+        raise ValueError("y长度必须等于n_samples")
+    root_rng = np.random.default_rng(_random_state(random_state))
+    seeds = root_rng.integers(0, np.iinfo(np.uint32).max, size=4, dtype=np.uint32)
+    return {
+        "sample_indices": bootstrap_index_matrix(n_samples, n_learners, random_state=int(seeds[0])),
+        "feature_subspaces": random_feature_subspaces(n_features, n_learners, subspace_size,
+                                                        random_state=int(seeds[1])),
+        "perturbed_labels": flipped_label_copies(y, n_learners, flip_fraction=flip_fraction,
+                                                   random_state=int(seeds[2])),
+        "parameter_seeds": random_parameter_seeds(n_learners, random_state=int(seeds[3])),
+    }

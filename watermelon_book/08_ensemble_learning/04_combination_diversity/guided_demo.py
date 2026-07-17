@@ -18,5 +18,10 @@ def main() -> None:
     report = d.regression_error_ambiguity(targets,predictions)
     print("ensemble:", report["ensemble_prediction"])
     print("identity holds:", np.allclose(report["ensemble_error"], report["mean_individual_error"]-report["ambiguity"]))
+    plan=d.diversity_perturbation_plan(6,5,y,n_learners=3,subspace_size=2,flip_fraction=1/3,random_state=9)
+    print("sample index shape:",plan["sample_indices"].shape)
+    print("feature subspaces:",plan["feature_subspaces"].tolist())
+    print("flips per learner:",np.sum(plan["perturbed_labels"]!=y[None,:],axis=1).tolist())
+    print("parameter seed shape:",plan["parameter_seeds"].shape)
 
 if __name__ == "__main__": main()
