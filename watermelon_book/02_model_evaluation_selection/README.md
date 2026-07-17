@@ -12,6 +12,7 @@
 | 4 | `04_overfitting_bias_variance/`：多项式复杂度、学习曲线与偏差—方差 | 已建参考闭环 |
 | 5 | `05_comparison_tests/`：二项检验、配对统计量、McNemar、Friedman/Nemenyi | 已建参考闭环 |
 | 6 | `06_tuning_final_model/`：有限参数网格、验证集选择、开发集重训与一次测试 | 已建参考闭环 |
+| 7 | `07_repeated_evaluation/`：重复留出、重复K折、划分波动与拟合次数 | 已建参考闭环 |
 
 ## 三条不可破坏的边界
 
