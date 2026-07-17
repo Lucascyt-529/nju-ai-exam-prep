@@ -32,3 +32,11 @@ def forward_sequence(
 
 def sequence_mean_squared_error(targets: np.ndarray, outputs: np.ndarray) -> float:
     raise NotImplementedError("请完成 sequence_mean_squared_error")
+
+
+def elman_bptt(X: np.ndarray, targets: np.ndarray, parameters: dict[str, np.ndarray], *, initial_state: np.ndarray | None = None) -> dict[str, object]:
+    raise NotImplementedError("请完成 elman_bptt")
+
+
+def train_elman_sequence(X: np.ndarray, targets: np.ndarray, n_hidden: int, **options: object) -> dict[str, object]:
+    raise NotImplementedError("请完成 train_elman_sequence")

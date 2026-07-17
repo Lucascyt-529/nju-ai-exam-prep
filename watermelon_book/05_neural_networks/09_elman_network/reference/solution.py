@@ -137,3 +137,66 @@ def sequence_mean_squared_error(targets: np.ndarray, outputs: np.ndarray) -> flo
     ):
         raise ValueError("targets和outputs必须是同形状非空二维有限数组")
     return float(np.mean((outputs - targets) ** 2))
+
+
+def _validate_targets(targets: np.ndarray, length: int, n_outputs: int) -> None:
+    if not _is_finite_numeric_array(targets) or targets.shape != (length, n_outputs):
+        raise ValueError("targets必须具有形状(T,o)且包含有限数值")
+
+
+def elman_bptt(X, targets, parameters, *, initial_state=None):
+    """对单条完整序列计算MSE及五组参数的BPTT梯度。"""
+    forward = forward_sequence(X, parameters, initial_state=initial_state)
+    outputs, states = forward["outputs"], forward["states"]
+    _validate_targets(targets, X.shape[0], outputs.shape[1])
+    gradients = {key: np.zeros_like(value, dtype=float) for key, value in parameters.items()}
+    output_gradient = 2.0 * (outputs - targets) / outputs.size
+    future_state_gradient = np.zeros(states.shape[1])
+    for time_index in range(X.shape[0] - 1, -1, -1):
+        gradients["Wy"] += np.outer(states[time_index + 1], output_gradient[time_index])
+        gradients["by"] += output_gradient[time_index]
+        state_gradient = output_gradient[time_index] @ parameters["Wy"].T + future_state_gradient
+        preactivation_gradient = state_gradient * (1.0 - states[time_index + 1] ** 2)
+        gradients["Wx"] += np.outer(X[time_index], preactivation_gradient)
+        gradients["Wh"] += np.outer(states[time_index], preactivation_gradient)
+        gradients["bh"] += preactivation_gradient
+        future_state_gradient = preactivation_gradient @ parameters["Wh"].T
+    return {"loss": sequence_mean_squared_error(targets, outputs), "gradients": gradients, "initial_state_gradient": future_state_gradient, "states": states, "outputs": outputs}
+
+
+def gradient_check_elman(X, targets, parameters, *, initial_state=None, epsilon=1e-6):
+    if not isinstance(epsilon, (int, float, np.integer, np.floating)) or isinstance(epsilon, (bool, np.bool_)) or not np.isfinite(epsilon) or epsilon <= 0:
+        raise ValueError("epsilon必须是有限正数")
+    analytic = elman_bptt(X, targets, parameters, initial_state=initial_state)["gradients"]
+    errors = {}
+    for key in PARAMETER_KEYS:
+        numeric = np.zeros_like(parameters[key], dtype=float)
+        for index in np.ndindex(parameters[key].shape):
+            plus = {name: value.astype(float).copy() for name, value in parameters.items()}
+            minus = {name: value.astype(float).copy() for name, value in parameters.items()}
+            plus[key][index] += epsilon; minus[key][index] -= epsilon
+            plus_output = forward_sequence(X, plus, initial_state=initial_state)["outputs"]
+            minus_output = forward_sequence(X, minus, initial_state=initial_state)["outputs"]
+            numeric[index] = (sequence_mean_squared_error(targets, plus_output) - sequence_mean_squared_error(targets, minus_output)) / (2.0 * epsilon)
+        denominator = np.maximum(1.0, np.abs(numeric) + np.abs(analytic[key]))
+        errors[key] = float(np.max(np.abs(numeric - analytic[key]) / denominator))
+    return errors
+
+
+def train_elman_sequence(X, targets, n_hidden, *, learning_rate=0.05, epochs=500, seed=0, clip_norm=5.0):
+    _validate_sequence(X)
+    if not _is_finite_numeric_array(targets) or targets.ndim != 2 or targets.shape[0] != X.shape[0] or targets.shape[1] == 0:
+        raise ValueError("targets必须是与X等长的非空有限二维数组")
+    if not _is_positive_integer(n_hidden) or not _is_positive_integer(epochs): raise ValueError("n_hidden和epochs必须是正整数")
+    if not isinstance(learning_rate, (int, float, np.integer, np.floating)) or isinstance(learning_rate, (bool, np.bool_)) or not np.isfinite(learning_rate) or learning_rate <= 0: raise ValueError("learning_rate必须是有限正数")
+    if clip_norm is not None and (not isinstance(clip_norm, (int, float, np.integer, np.floating)) or isinstance(clip_norm, (bool, np.bool_)) or not np.isfinite(clip_norm) or clip_norm <= 0): raise ValueError("clip_norm必须是None或有限正数")
+    parameters = initialize_elman_parameters(X.shape[1], int(n_hidden), targets.shape[1], seed=seed)
+    history = [sequence_mean_squared_error(targets, forward_sequence(X, parameters)["outputs"])]
+    gradient_norms = []
+    for _ in range(int(epochs)):
+        gradients = elman_bptt(X, targets, parameters)["gradients"]
+        norm = float(np.sqrt(sum(np.sum(value * value) for value in gradients.values()))); gradient_norms.append(norm)
+        scale = 1.0 if clip_norm is None or norm <= clip_norm else float(clip_norm) / norm
+        parameters = {key: parameters[key] - float(learning_rate) * scale * gradients[key] for key in PARAMETER_KEYS}
+        history.append(sequence_mean_squared_error(targets, forward_sequence(X, parameters)["outputs"]))
+    return {"parameters": parameters, "loss_history": np.asarray(history), "gradient_norms": np.asarray(gradient_norms), "clip_norm": clip_norm}
