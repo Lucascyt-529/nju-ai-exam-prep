@@ -50,7 +50,8 @@
 | 第8章 集成学习 | 随机森林 | `watermelon_book/08_ensemble_learning/03_random_forest/README.md` | `03_random_forest/reference/solution.py` | `03_random_forest/starter.py` | `test_random_forest_reference.py` | 已验证 | Bootstrap、随机候选特征、受限树桩、投票与预测相关性；含19项测试，未替代学生作答 |
 | 第8章 集成学习 | 结合策略与多样性 | `watermelon_book/08_ensemble_learning/04_combination_diversity/README.md` | `04_combination_diversity/reference/solution.py` | `04_combination_diversity/starter.py` | `test_ensemble_combination_diversity_reference.py` | 已验证 | 加权平均、硬/软投票、Q/相关/分歧/双错与回归误差-分歧；含19项测试，未替代学生作答 |
 | 第9章 聚类 | 距离度量与性能度量 | `watermelon_book/09_clustering/01_distances_metrics/README.md` | `01_distances_metrics/reference/solution.py` | `01_distances_metrics/starter.py` | `test_clustering_distances_metrics_reference.py` | 已验证 | Minkowski/Hamming、SSE、轮廓、样本对计数、Rand与ARI；含21项测试，未替代学生作答 |
-| 第9章 聚类 | 原型、层次与密度聚类 | — | — | — | — | 未开始 | 代表算法手写 |
+| 第9章 聚类 | K-means原型聚类 | `watermelon_book/09_clustering/02_kmeans/README.md` | `02_kmeans/reference/solution.py` | `02_kmeans/starter.py` | `test_kmeans_reference.py` | 已验证 | K-means++、分配/更新、空簇重置、SSE历史与收敛；含23项测试，未替代学生作答 |
+| 第9章 聚类 | LVQ、层次与密度聚类 | — | — | — | — | 未开始 | 代表算法手写 |
 | 第10章 降维与度量学习 | KNN、MDS、PCA | — | — | — | — | 未开始 | 核心算法手写 |
 | 第10章 降维与度量学习 | 核化、流形学习与度量学习 | — | — | — | — | 未开始 | 代表方法和实验 |
 | 第11章 特征选择与稀疏学习 | 子集搜索、过滤式与包裹式选择 | — | — | — | — | 未开始 | 核心方法实现 |
