@@ -65,6 +65,23 @@ def rand_index(labels_true: np.ndarray, labels_pred: np.ndarray) -> float:
     return 1.0 if total==0 else (counts["same_same"]+counts["diff_diff"])/total
 
 
+def jaccard_coefficient(labels_true: np.ndarray, labels_pred: np.ndarray) -> float:
+    counts = pair_confusion_counts(labels_true, labels_pred)
+    numerator = counts["same_same"]
+    denominator = numerator + counts["same_diff"] + counts["diff_same"]
+    return float("nan") if denominator == 0 else numerator / denominator
+
+
+def fowlkes_mallows_index(labels_true: np.ndarray, labels_pred: np.ndarray) -> float:
+    counts = pair_confusion_counts(labels_true, labels_pred)
+    same_same = counts["same_same"]
+    first_denominator = same_same + counts["same_diff"]
+    second_denominator = same_same + counts["diff_same"]
+    if first_denominator == 0 or second_denominator == 0:
+        return float("nan")
+    return float(np.sqrt((same_same / first_denominator) * (same_same / second_denominator)))
+
+
 def _comb2(values: np.ndarray) -> np.ndarray:
     return values*(values-1)/2
 
@@ -186,3 +203,53 @@ def pairwise_mixed_distance(
     categorical = pairwise_vdm(X_categorical, Z_categorical, vdm_model, p=power,
                                weights=categorical_weights) ** power
     return (numeric + categorical) ** (1.0 / power)
+
+
+def davies_bouldin_index(X: np.ndarray, labels: np.ndarray) -> float:
+    """教材定义：簇内平均成对距离之和除以簇中心距离，逐簇取最坏后平均。"""
+    _numeric_matrix(X, "X"); _labels(labels, len(X), "labels")
+    unique = np.unique(labels)
+    if len(unique) < 2:
+        raise ValueError("DBI至少需要两个簇")
+    centers = []; average_distances = []
+    for label in unique:
+        cluster = X[labels == label].astype(float)
+        centers.append(np.mean(cluster, axis=0))
+        if len(cluster) < 2:
+            average_distances.append(0.0)
+        else:
+            distances = pairwise_minkowski(cluster, cluster)
+            upper = distances[np.triu_indices(len(cluster), k=1)]
+            average_distances.append(float(np.mean(upper)))
+    centers = np.asarray(centers); average_distances = np.asarray(average_distances)
+    center_distances = pairwise_minkowski(centers, centers)
+    worst = []
+    for i in range(len(unique)):
+        ratios = []
+        for j in range(len(unique)):
+            if i == j: continue
+            numerator = average_distances[i] + average_distances[j]
+            denominator = center_distances[i, j]
+            ratios.append(np.inf if denominator <= 1e-15 else numerator / denominator)
+        worst.append(max(ratios))
+    return float(np.mean(worst))
+
+
+def dunn_index(X: np.ndarray, labels: np.ndarray) -> float:
+    """最小簇间样本距离除以最大簇内直径；越大越好。"""
+    _numeric_matrix(X, "X"); _labels(labels, len(X), "labels")
+    unique = np.unique(labels)
+    if len(unique) < 2:
+        raise ValueError("Dunn指数至少需要两个簇")
+    clusters = [X[labels == label].astype(float) for label in unique]
+    diameters = []
+    for cluster in clusters:
+        diameters.append(0.0 if len(cluster) < 2 else float(np.max(pairwise_minkowski(cluster, cluster))))
+    minimum_between = np.inf
+    for i in range(len(clusters)):
+        for j in range(i + 1, len(clusters)):
+            minimum_between = min(minimum_between, float(np.min(pairwise_minkowski(clusters[i], clusters[j]))))
+    maximum_diameter = max(diameters)
+    if maximum_diameter <= 1e-15:
+        return float(np.inf if minimum_between > 1e-15 else np.nan)
+    return float(minimum_between / maximum_diameter)

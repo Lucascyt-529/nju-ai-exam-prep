@@ -19,6 +19,14 @@ def adjusted_rand_index(labels_true: np.ndarray, labels_pred: np.ndarray) -> flo
     raise NotImplementedError("请完成 adjusted_rand_index")
 
 
+def jaccard_coefficient(labels_true: np.ndarray, labels_pred: np.ndarray) -> float:
+    raise NotImplementedError("请完成 jaccard_coefficient")
+
+
+def fowlkes_mallows_index(labels_true: np.ndarray, labels_pred: np.ndarray) -> float:
+    raise NotImplementedError("请完成 fowlkes_mallows_index")
+
+
 def pairwise_weighted_minkowski(X: np.ndarray, Z: np.ndarray, *, p: float = 2.0,
                                 weights: np.ndarray | None = None) -> np.ndarray:
     raise NotImplementedError("请完成 pairwise_weighted_minkowski")
@@ -42,3 +50,11 @@ def pairwise_mixed_distance(
     categorical_weights: np.ndarray | None = None,
 ) -> np.ndarray:
     raise NotImplementedError("请完成 pairwise_mixed_distance")
+
+
+def davies_bouldin_index(X: np.ndarray, labels: np.ndarray) -> float:
+    raise NotImplementedError("请完成 davies_bouldin_index")
+
+
+def dunn_index(X: np.ndarray, labels: np.ndarray) -> float:
+    raise NotImplementedError("请完成 dunn_index")
