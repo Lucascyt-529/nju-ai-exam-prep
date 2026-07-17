@@ -64,6 +64,7 @@
 | 第10章 降维与度量学习 | Isomap流形学习 | `watermelon_book/10_dimensionality_reduction/05_isomap/README.md` | `05_isomap/reference/solution.py` | `05_isomap/starter.py` | `test_isomap_reference.py` | 已验证 | 稳定k近邻图、并集对称化、Floyd测地距离、断图与MDS；含21项测试，未替代学生作答 |
 | 第10章 降维与度量学习 | LLE流形学习 | `watermelon_book/10_dimensionality_reduction/07_lle/README.md` | `07_lle/reference/solution.py` | `07_lle/starter.py` | `test_lle_reference.py` | 已验证 | 稳定近邻、局部和为1重构权重、谱嵌入与坐标约束；含20项测试，未替代学生作答 |
 | 第10章 降维与度量学习 | 成对约束度量学习 | `watermelon_book/10_dimensionality_reduction/06_metric_learning/README.md` | `06_metric_learning/reference/solution.py` | `06_metric_learning/starter.py` | `test_metric_learning_reference.py` | 已验证 | Mahalanobis距离、同/异类成对目标、PSD投影和回溯优化；含18项测试，未替代学生作答 |
+| 第10章 降维与度量学习 | NCA近邻成分分析 | `watermelon_book/10_dimensionality_reduction/08_nca/README.md` | `08_nca/reference/solution.py` | `08_nca/starter.py` | `test_nca_reference.py` | 已验证 | 概率近邻、同类留一目标、解析梯度、回溯上升与PSD度量；含14项测试，未替代学生作答 |
 | 第11章 特征选择与稀疏学习 | 子集搜索、过滤式与包裹式选择 | — | — | — | — | 未开始 | 核心方法实现 |
 | 第11章 特征选择与稀疏学习 | L1、字典学习与压缩感知 | — | — | — | — | 未开始 | 推导和实验 |
 | 第12章 计算学习理论 | PAC 与有限假设空间 | — | — | — | — | 未开始 | 推导和概念题 |
