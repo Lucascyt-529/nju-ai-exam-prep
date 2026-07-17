@@ -43,7 +43,8 @@
 | 第7章 贝叶斯分类器 | 最小风险贝叶斯决策与代价矩阵 | `watermelon_book/07_bayesian_classifiers/01_bayes_decision/README.md` | `01_bayes_decision/reference/solution.py` | `01_bayes_decision/starter.py` | `test_bayes_decision_reference.py` | 已验证 | 后验归一化、0/1损失、一般条件风险与非对称二分类阈值；含28项测试，未替代学生作答 |
 | 第7章 贝叶斯分类器 | 极大似然参数估计 | `watermelon_book/07_bayesian_classifiers/02_maximum_likelihood/README.md` | `02_maximum_likelihood/reference/solution.py` | `02_maximum_likelihood/starter.py` | `test_bayes_mle_reference.py` | 已验证 | 类先验、Bernoulli、类别分布、单/多元高斯MLE与对数似然；含17项测试，未替代学生作答 |
 | 第7章 贝叶斯分类器 | 朴素贝叶斯 | `watermelon_book/07_bayesian_classifiers/03_naive_bayes/README.md` | `03_naive_bayes/reference/solution.py` | `03_naive_bayes/starter.py` | `test_naive_bayes_reference.py` | 已验证 | 离散Laplace/未知桶、对数概率、高斯方差下限与稳定后验；含21项测试，未替代学生作答 |
-| 第7章 贝叶斯分类器 | 半朴素贝叶斯与贝叶斯网 | — | — | — | — | 未开始 | 代表方法和推断实验 |
+| 第7章 贝叶斯分类器 | AODE半朴素贝叶斯 | `watermelon_book/07_bayesian_classifiers/04_aode/README.md` | `04_aode/reference/solution.py` | `04_aode/starter.py` | `test_aode_reference.py` | 已验证 | 超父频数阈值、SPODE对数分数、平均汇总与朴素回退；含19项测试，未替代学生作答 |
+| 第7章 贝叶斯分类器 | 贝叶斯网与推断 | — | — | — | — | 未开始 | DAG、联合分解与小型精确推断实验 |
 | 第8章 集成学习 | AdaBoost、Bagging、随机森林 | — | — | — | — | 未开始 | 代表算法手写 |
 | 第8章 集成学习 | 结合策略与多样性 | — | — | — | — | 未开始 | 性质实验 |
 | 第9章 聚类 | 距离度量与性能度量 | — | — | — | — | 未开始 | NumPy 实现 |
