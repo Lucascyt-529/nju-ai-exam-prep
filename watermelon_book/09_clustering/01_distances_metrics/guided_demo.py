@@ -17,5 +17,11 @@ def main():
     print("silhouette:",np.round(m.silhouette_samples(X,labels),4))
     print("pair counts:",m.pair_confusion_counts(labels,alternative))
     print("Rand/ARI:",round(m.rand_index(labels,alternative),4),round(m.adjusted_rand_index(labels,alternative),4))
+    categories=np.array([["red"],["red"],["blue"],["blue"],["green"],["green"]])
+    groups=np.array([0,0,1,1,0,1]); vdm=m.fit_vdm(categories,groups)
+    query=np.array([["red"],["blue"],["green"]])
+    print("VDM red/blue/green:",np.round(m.pairwise_vdm(query,query,vdm),4).tolist())
+    mixed=m.pairwise_mixed_distance(np.array([[0.]]),np.array([[3.]]),np.array([["red"]]),np.array([["blue"]]),vdm,p=2)
+    print("mixed distance:",round(float(mixed[0,0]),6))
 
 if __name__=="__main__": main()
