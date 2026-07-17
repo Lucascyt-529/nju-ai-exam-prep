@@ -78,3 +78,16 @@ def cost_curve_from_scores(
     positive_label: object = 1,
 ) -> dict[str, np.ndarray | float]:
     raise NotImplementedError("请完成 cost_curve_from_scores")
+
+
+def multiclass_precision_recall_f1(
+    y_true: np.ndarray, y_pred: np.ndarray,
+    labels: np.ndarray | None = None,
+) -> dict[str, np.ndarray | float]:
+    raise NotImplementedError("请完成 multiclass_precision_recall_f1")
+
+
+def precision_recall_break_even_point(
+    y_true: np.ndarray, scores: np.ndarray, positive_label: object = 1
+) -> float:
+    raise NotImplementedError("请完成 precision_recall_break_even_point")

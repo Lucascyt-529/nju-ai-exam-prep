@@ -245,3 +245,62 @@ def cost_curve_from_scores(
     return {"probability_costs": x_values.copy(), "normalized_cost_lines": lines,
             "lower_envelope": envelope, "area": float(area),
             "fpr": fpr, "tpr": tpr, "thresholds": thresholds}
+
+
+def multiclass_precision_recall_f1(
+    y_true: np.ndarray, y_pred: np.ndarray,
+    labels: np.ndarray | None = None,
+) -> dict[str, np.ndarray | float]:
+    """按一对其余统计每类计数，并返回教材口径的宏/微P、R、F1。"""
+    true = np.asarray(y_true); pred = np.asarray(y_pred)
+    if true.ndim != 1 or pred.ndim != 1 or true.size == 0 or true.shape != pred.shape:
+        raise ValueError("y_true和y_pred必须是同形状非空一维数组")
+    if true.dtype.kind in "fc" and not np.all(np.isfinite(true)):
+        raise ValueError("y_true不能包含非有限值")
+    if pred.dtype.kind in "fc" and not np.all(np.isfinite(pred)):
+        raise ValueError("y_pred不能包含非有限值")
+    if labels is None:
+        class_labels = np.union1d(true, pred)
+    else:
+        class_labels = np.asarray(labels)
+        if (class_labels.ndim != 1 or class_labels.size == 0
+                or len(np.unique(class_labels)) != len(class_labels)
+                or not set(np.union1d(true, pred)).issubset(set(class_labels.tolist()))):
+            raise ValueError("labels必须是一维无重复数组并覆盖真实与预测类别")
+    tp = np.empty(len(class_labels), dtype=int); fp = np.empty_like(tp); fn = np.empty_like(tp)
+    for index, label in enumerate(class_labels):
+        true_positive = true == label; predicted_positive = pred == label
+        tp[index] = np.count_nonzero(true_positive & predicted_positive)
+        fp[index] = np.count_nonzero(~true_positive & predicted_positive)
+        fn[index] = np.count_nonzero(true_positive & ~predicted_positive)
+    precision = np.divide(tp, tp + fp, out=np.zeros(len(tp), dtype=float), where=(tp + fp) > 0)
+    recall = np.divide(tp, tp + fn, out=np.zeros(len(tp), dtype=float), where=(tp + fn) > 0)
+    macro_precision = float(np.mean(precision)); macro_recall = float(np.mean(recall))
+    macro_f1 = 0.0 if macro_precision + macro_recall == 0 else 2 * macro_precision * macro_recall / (macro_precision + macro_recall)
+    total_tp, total_fp, total_fn = int(np.sum(tp)), int(np.sum(fp)), int(np.sum(fn))
+    micro_precision = _safe_ratio(total_tp, total_tp + total_fp)
+    micro_recall = _safe_ratio(total_tp, total_tp + total_fn)
+    micro_f1 = 0.0 if micro_precision + micro_recall == 0 else 2 * micro_precision * micro_recall / (micro_precision + micro_recall)
+    return {"labels": class_labels.copy(), "tp": tp, "fp": fp, "fn": fn,
+            "precision_per_class": precision, "recall_per_class": recall,
+            "macro_precision": macro_precision, "macro_recall": macro_recall,
+            "macro_f1": float(macro_f1), "micro_precision": float(micro_precision),
+            "micro_recall": float(micro_recall), "micro_f1": float(micro_f1)}
+
+
+def precision_recall_break_even_point(
+    y_true: np.ndarray, scores: np.ndarray, positive_label: object = 1
+) -> float:
+    """在离散P-R折线上线性插值 precision=recall 的BEP。"""
+    precision, recall, _ = precision_recall_curve_points(y_true, scores, positive_label)
+    difference = precision - recall
+    exact = np.flatnonzero(np.isclose(difference, 0.0, atol=1e-12))
+    if exact.size:
+        return float(0.5 * (precision[exact[0]] + recall[exact[0]]))
+    for index in range(len(difference) - 1):
+        if difference[index] * difference[index + 1] < 0:
+            fraction = difference[index] / (difference[index] - difference[index + 1])
+            interpolated_precision = precision[index] + fraction * (precision[index + 1] - precision[index])
+            interpolated_recall = recall[index] + fraction * (recall[index + 1] - recall[index])
+            return float(0.5 * (interpolated_precision + interpolated_recall))
+    raise ValueError("当前P-R折线没有可计算的平衡点")
