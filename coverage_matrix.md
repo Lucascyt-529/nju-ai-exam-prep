@@ -25,7 +25,8 @@
 | 第4章 决策树 | 连续阈值与离散/连续混合树 | `watermelon_book/04_decision_trees/03_continuous_mixed_tree/README.md` | `03_continuous_mixed_tree/reference/solution.py` | `03_continuous_mixed_tree/starter.py` | `test_continuous_mixed_tree_reference.py` | 已验证 | 相邻不同值中点、确定性阈值、连续特征重复使用与范围外预测；含17项测试 |
 | 第4章 决策树 | 缺失值、带权增益与分支概率传播 | `watermelon_book/04_decision_trees/04_missing_values/README.md` | `04_missing_values/reference/solution.py` | `04_missing_values/starter.py` | `test_missing_value_tree_reference.py` | 已验证 | 非缺失比例惩罚、样本权重守恒与缺失预测概率汇总；含17项测试 |
 | 第4章 决策树 | 多变量线性划分树 | `watermelon_book/04_decision_trees/05_multivariate_tree/README.md` | `05_multivariate_tree/reference/solution.py` | `05_multivariate_tree/starter.py` | `test_multivariate_tree_reference.py` | 已验证 | 投影阈值、确定性坐标搜索、斜边界与旋转数据；含16项测试 |
-| 第5章 神经网络 | 感知机、多层网络与 BP | — | — | — | — | 未开始 | NumPy 手写反向传播 |
+| 第5章 神经网络 | 神经元模型与感知机 | `watermelon_book/05_neural_networks/01_perceptron/README.md` | `01_perceptron/reference/solution.py` | `01_perceptron/starter.py` | `test_perceptron_reference.py` | 已验证 | 线性得分、阈值预测、逐样本更新、可分收敛与XOR反例；含25项测试，未替代学生作答 |
+| 第5章 神经网络 | 多层网络与 BP | — | — | — | — | 未开始 | NumPy 手写反向传播 |
 | 第5章 神经网络 | 全局最小、局部极小与其他常见网络 | — | — | — | — | 未开始 | 推导和小实验 |
 | 第6章 支持向量机 | 间隔、对偶与核函数 | — | — | — | — | 未开始 | 核心版本手写 |
 | 第6章 支持向量机 | 软间隔、正则化、支持向量回归 | — | — | — | — | 未开始 | 推导与代表实现 |
