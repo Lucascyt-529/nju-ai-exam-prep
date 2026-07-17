@@ -56,3 +56,11 @@ def stack_sample_batches(first: np.ndarray, second: np.ndarray) -> np.ndarray:
     if first.shape[1] != second.shape[1]:
         raise ValueError("列数不对齐")
     return np.concatenate((first, second), axis=0)
+
+
+def add_bias_column_right(X: np.ndarray) -> np.ndarray:
+    """在合法的非空二维X右侧增加一列1。"""
+    _validate_matrix(X)
+    m = X.shape[0]
+    tmp = np.ones((m, 1))
+    return np.concatenate((X, tmp), axis=1)

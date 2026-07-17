@@ -72,6 +72,26 @@ def test_student_stacks_sample_batches_along_axis_zero() -> None:
     assert result.shape == (4, 2)
 
 
+def test_student_adds_bias_on_right_as_independent_variant() -> None:
+    X = np.array([[2.0, 4.0], [6.0, 8.0]])
+
+    result = student.add_bias_column_right(X)
+
+    np.testing.assert_array_equal(result, [[2.0, 4.0, 1.0], [6.0, 8.0, 1.0]])
+    assert result.shape == (2, 3)
+
+
+def test_student_stacks_batches_with_different_sample_counts() -> None:
+    first = np.arange(6).reshape(2, 3)
+    second = np.arange(12).reshape(4, 3)
+
+    result = student.stack_sample_batches(first, second)
+
+    assert result.shape == (6, 3)
+    np.testing.assert_array_equal(result[:2], first)
+    np.testing.assert_array_equal(result[2:], second)
+
+
 @pytest.mark.parametrize(
     ("function", "argument"),
     [
