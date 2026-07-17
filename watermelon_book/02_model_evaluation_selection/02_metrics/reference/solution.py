@@ -186,3 +186,62 @@ def auc_trapezoid(x: np.ndarray, y: np.ndarray) -> float:
     if np.any(np.diff(x_values) < 0):
         raise ValueError("x 必须单调不减")
     return float(np.trapezoid(y_values, x_values))
+
+
+def positive_probability_cost(
+    positive_probability: np.ndarray,
+    false_positive_cost: float,
+    false_negative_cost: float,
+) -> np.ndarray:
+    """把正类基率与两种误判代价映射到[0,1]代价横轴。"""
+    probabilities = np.asarray(positive_probability, dtype=float)
+    if (probabilities.ndim != 1 or probabilities.size == 0
+            or not np.all(np.isfinite(probabilities))
+            or np.any((probabilities < 0) | (probabilities > 1))):
+        raise ValueError("positive_probability必须是[0,1]内的非空有限一维数组")
+    if (not np.isfinite(false_positive_cost) or not np.isfinite(false_negative_cost)
+            or false_positive_cost < 0 or false_negative_cost < 0
+            or false_positive_cost + false_negative_cost == 0):
+        raise ValueError("两种错误代价必须非负、有限且不能同时为0")
+    numerator = probabilities * false_negative_cost
+    denominator = numerator + (1.0 - probabilities) * false_positive_cost
+    result = np.empty_like(probabilities)
+    valid = denominator > 0
+    result[valid] = numerator[valid] / denominator[valid]
+    result[~valid] = probabilities[~valid]
+    return result
+
+
+def cost_curve_lines(
+    fpr: np.ndarray, tpr: np.ndarray, probability_costs: np.ndarray
+) -> np.ndarray:
+    """每个ROC点对应一条 y=(1-x)FPR+xFNR 的代价线。"""
+    fpr_values = np.asarray(fpr, dtype=float)
+    tpr_values = np.asarray(tpr, dtype=float)
+    x_values = np.asarray(probability_costs, dtype=float)
+    if (fpr_values.ndim != 1 or tpr_values.ndim != 1 or fpr_values.size == 0
+            or fpr_values.shape != tpr_values.shape
+            or not np.all(np.isfinite(fpr_values)) or not np.all(np.isfinite(tpr_values))
+            or np.any((fpr_values < 0) | (fpr_values > 1))
+            or np.any((tpr_values < 0) | (tpr_values > 1))):
+        raise ValueError("fpr和tpr必须是形状相同的[0,1]有限一维数组")
+    if (x_values.ndim != 1 or x_values.size == 0 or not np.all(np.isfinite(x_values))
+            or np.any((x_values < 0) | (x_values > 1)) or np.any(np.diff(x_values) < 0)):
+        raise ValueError("probability_costs必须是[0,1]内单调不减的非空有限一维数组")
+    false_negative_rates = 1.0 - tpr_values
+    return fpr_values[:, None] * (1.0 - x_values[None, :]) + false_negative_rates[:, None] * x_values[None, :]
+
+
+def cost_curve_from_scores(
+    y_true: np.ndarray, scores: np.ndarray, probability_costs: np.ndarray,
+    positive_label: object = 1,
+) -> dict[str, np.ndarray | float]:
+    """将所有ROC阈值转成代价线，并返回逐点下包络及其面积。"""
+    x_values = np.asarray(probability_costs, dtype=float)
+    fpr, tpr, thresholds = roc_curve_points(y_true, scores, positive_label)
+    lines = cost_curve_lines(fpr, tpr, x_values)
+    envelope = np.min(lines, axis=0)
+    area = auc_trapezoid(x_values, envelope) if len(x_values) >= 2 else 0.0
+    return {"probability_costs": x_values.copy(), "normalized_cost_lines": lines,
+            "lower_envelope": envelope, "area": float(area),
+            "fpr": fpr, "tpr": tpr, "thresholds": thresholds}

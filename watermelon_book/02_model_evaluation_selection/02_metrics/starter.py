@@ -57,3 +57,24 @@ def precision_recall_curve_points(
 
 def auc_trapezoid(x: np.ndarray, y: np.ndarray) -> float:
     raise NotImplementedError("请完成 auc_trapezoid")
+
+
+def positive_probability_cost(
+    positive_probability: np.ndarray,
+    false_positive_cost: float,
+    false_negative_cost: float,
+) -> np.ndarray:
+    raise NotImplementedError("请完成 positive_probability_cost")
+
+
+def cost_curve_lines(
+    fpr: np.ndarray, tpr: np.ndarray, probability_costs: np.ndarray
+) -> np.ndarray:
+    raise NotImplementedError("请完成 cost_curve_lines")
+
+
+def cost_curve_from_scores(
+    y_true: np.ndarray, scores: np.ndarray, probability_costs: np.ndarray,
+    positive_label: object = 1,
+) -> dict[str, np.ndarray | float]:
+    raise NotImplementedError("请完成 cost_curve_from_scores")
