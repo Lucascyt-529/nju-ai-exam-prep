@@ -12,7 +12,7 @@
 | 2 | `integrated_tasks/02_linear_regression_csv/`：三份CSV、验证指标、模型保存与测试预测 | 已建参考闭环 |
 | 3 | `02_logistic_regression/`：稳定概率、交叉熵、L2梯度与梯度下降 | 已建参考闭环 |
 | 4 | `03_lda/`：类内散度、Fisher投影与二分类判别 | 已建参考闭环 |
-| 5 | `04_multiclass_reduction/`：一对其余、一对一、类别编码与平票规则 | 已建参考闭环 |
+| 5 | `04_multiclass_reduction/`：OvR、OvO、MvM/ECOC编码、距离解码与纠错边界 | 已建参考闭环 |
 | 6 | `05_class_imbalance/`：采样、类别权重、代价阈值与先验修正 | 已建参考闭环 |
 
 ## 统一形状约定
