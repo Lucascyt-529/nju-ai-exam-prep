@@ -1,0 +1,6 @@
+count=4
+mean=2.500000
+std=1.118034
+minimum=1.000000
+maximum=4.000000
+scaled_mean=5.000000
