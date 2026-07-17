@@ -30,7 +30,8 @@
 | 第5章 神经网络 | BP反向传播与数值梯度检查 | `watermelon_book/05_neural_networks/03_backpropagation/README.md` | `03_backpropagation/reference/solution.py` | `03_backpropagation/starter.py` | `test_neural_network_backprop_reference.py` | 已验证 | 输出层/隐层解析梯度、严格缓存和逐参数中心有限差分；含22项测试，未替代学生作答 |
 | 第5章 神经网络 | 完整BP训练与预测 | `watermelon_book/05_neural_networks/04_bp_training/README.md` | `04_bp_training/reference/solution.py` | `04_bp_training/starter.py` | `test_neural_network_training_reference.py` | 已验证 | 非原地梯度下降、初始/逐轮损失、列形状预测、固定配置XOR拟合；含25项测试，未替代学生作答 |
 | 第5章 神经网络 | 全局最小、局部极小与初始化 | `watermelon_book/05_neural_networks/05_optimization_landscape/README.md` | `05_optimization_landscape/reference/solution.py` | `05_optimization_landscape/starter.py` | `test_optimization_landscape_reference.py` | 已验证 | 可穷尽驻点的一维双井、二阶分类、深浅极小与多初值吸引域；含22项测试，未替代学生作答 |
-| 第5章 神经网络 | 其他常见网络 | — | — | — | — | 未开始 | 待按实际教材目录核对后建设代表性原理和实验 |
+| 第5章 神经网络 | RBF网络 | `watermelon_book/05_neural_networks/06_rbf_network/README.md` | `06_rbf_network/reference/solution.py` | `06_rbf_network/starter.py` | `test_rbf_network_reference.py` | 已验证 | 高斯距离响应、显式中心/宽度、最小二乘或岭输出层、奇异设计矩阵；含18项测试，未替代学生作答 |
+| 第5章 神经网络 | 其他常见网络 | — | — | — | — | 未开始 | 待按实际教材目录核对后建设ART、SOM、级联相关、Elman与Boltzmann等代表性原理和实验 |
 | 第6章 支持向量机 | 间隔、对偶与核函数 | — | — | — | — | 未开始 | 核心版本手写 |
 | 第6章 支持向量机 | 软间隔、正则化、支持向量回归 | — | — | — | — | 未开始 | 推导与代表实现 |
 | 第7章 贝叶斯分类器 | 贝叶斯决策、极大似然、朴素贝叶斯 | — | — | — | — | 未开始 | Python/NumPy 手写 |
