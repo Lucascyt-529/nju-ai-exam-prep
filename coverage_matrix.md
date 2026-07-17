@@ -1,12 +1,13 @@
 # 《机器学习》覆盖矩阵
 
-当前矩阵依据建仓任务书中的16章主线建立。它是初始映射，不等同于已经覆盖；待确认教材版次后，还需要按实际目录细化到小节。当前建设优先级是第1～10章，第11～16章暂缓并保留为长期范围。
+当前矩阵以已核验的2016年第1版目录为主线，并由 `watermelon_book/COVERAGE_AUDIT_2016.md` 细化到前10章小节。矩阵表示仓库证据，不等于学习者已经掌握；第11～16章按当前优先级暂缓并保留为长期范围。
 
 状态只能使用：`未开始`、`已建骨架`、`已讲解`、`已实现待验证`、`已验证`、`学生已独立完成`。
 
 | 教材章节 | 核心条目 | 讲解文件 | 实现文件 | 练习 | 测试 | 状态 | 备注 |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | 第1章 绪论 | 基本术语、假设空间、归纳偏好、NFL | `watermelon_book/01_introduction/01_hypothesis_preference_nfl/README.md` | `01_hypothesis_preference_nfl/reference/solution.py` | `01_hypothesis_preference_nfl/starter.py` | `test_introduction_reference.py` | 已验证 | 有限二分类假设/版本空间、平滑偏好和全目标NFL平均；含17项测试，未替代学生作答 |
+| 第1章 绪论 | 发展历程与应用现状 | `watermelon_book/01_introduction/02_history_applications/README.md` | — | `02_history_applications/exercises.md` | — | 已讲解 | 范式变化、六问应用拆解与独立参考思路；概念专题不硬凑算法 |
 | 第2章 模型评估与选择 | 经验误差、泛化误差、欠拟合与过拟合 | `04_overfitting_bias_variance/README.md` | `04_overfitting_bias_variance/reference/solution.py` | `04_overfitting_bias_variance/starter.py` | `test_overfitting_bias_variance_reference.py` | 已验证 | 多项式复杂度与学习曲线；未替代学生作答 |
 | 第2章 模型评估与选择 | 留出法、分层划分、K折与自助法 | `01_data_splitting/README.md` | `01_data_splitting/reference/solution.py` | `01_data_splitting/starter.py` | `test_model_evaluation_splitting_reference.py` | 已验证 | 路径相对第2章目录；含10项测试 |
 | 第2章 模型评估与选择 | 回归、二分类、ROC/AUC与代价敏感度量 | `02_metrics/README.md` | `02_metrics/reference/solution.py` | `02_metrics/starter.py` | `test_model_evaluation_metrics_reference.py` | 已验证 | 含12项测试；未替代学生作答 |
