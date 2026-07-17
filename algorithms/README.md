@@ -12,3 +12,4 @@
 | 6 | `06_dijkstra_shortest_path/`：最小堆、陈旧条目与路径恢复 | 已建参考闭环 |
 | 7 | `07_min_coin_change/`：一维DP、不可达与组合恢复 | 已建参考闭环 |
 | 8 | `08_longest_common_subsequence/`：二维DP与确定性序列恢复 | 已建参考闭环 |
+| 9 | `09_zero_one_knapsack/`：二维DP、物品不可重复与下标恢复 | 已建参考闭环 |
