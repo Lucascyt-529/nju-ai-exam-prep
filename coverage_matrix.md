@@ -6,7 +6,7 @@
 
 | 教材章节 | 核心条目 | 讲解文件 | 实现文件 | 练习 | 测试 | 状态 | 备注 |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| 第1章 绪论 | 基本术语、假设空间、归纳偏好、NFL | — | — | — | — | 未开始 | 以概念辨析和小实验为主 |
+| 第1章 绪论 | 基本术语、假设空间、归纳偏好、NFL | `watermelon_book/01_introduction/01_hypothesis_preference_nfl/README.md` | `01_hypothesis_preference_nfl/reference/solution.py` | `01_hypothesis_preference_nfl/starter.py` | `test_introduction_reference.py` | 已验证 | 有限二分类假设/版本空间、平滑偏好和全目标NFL平均；含17项测试，未替代学生作答 |
 | 第2章 模型评估与选择 | 经验误差、泛化误差、欠拟合与过拟合 | `04_overfitting_bias_variance/README.md` | `04_overfitting_bias_variance/reference/solution.py` | `04_overfitting_bias_variance/starter.py` | `test_overfitting_bias_variance_reference.py` | 已验证 | 多项式复杂度与学习曲线；未替代学生作答 |
 | 第2章 模型评估与选择 | 留出法、分层划分、K折与自助法 | `01_data_splitting/README.md` | `01_data_splitting/reference/solution.py` | `01_data_splitting/starter.py` | `test_model_evaluation_splitting_reference.py` | 已验证 | 路径相对第2章目录；含10项测试 |
 | 第2章 模型评估与选择 | 回归、二分类、ROC/AUC与代价敏感度量 | `02_metrics/README.md` | `02_metrics/reference/solution.py` | `02_metrics/starter.py` | `test_model_evaluation_metrics_reference.py` | 已验证 | 含12项测试；未替代学生作答 |
