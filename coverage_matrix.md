@@ -58,7 +58,8 @@
 | 第10章 降维与度量学习 | 经典MDS | `watermelon_book/10_dimensionality_reduction/02_classical_mds/README.md` | `02_classical_mds/reference/solution.py` | `02_classical_mds/starter.py` | `test_classical_mds_reference.py` | 已验证 | 平方距离双中心化、谱嵌入、距离重构、stress与非欧氏诊断；含22项测试，未替代学生作答 |
 | 第10章 降维与度量学习 | PCA | `watermelon_book/10_dimensionality_reduction/03_pca/README.md` | `03_pca/reference/solution.py` | `03_pca/starter.py` | `test_pca_reference.py` | 已验证 | axis=0中心化、协方差谱、解释方差、投影逆变换与重构；含23项测试，未替代学生作答 |
 | 第10章 降维与度量学习 | 核PCA | `watermelon_book/10_dimensionality_reduction/04_kernel_pca/README.md` | `04_kernel_pca/reference/solution.py` | `04_kernel_pca/starter.py` | `test_kernel_pca_reference.py` | 已验证 | 线性/多项式/RBF核、训练中心化、正谱坐标与新样本投影；含20项测试，未替代学生作答 |
-| 第10章 降维与度量学习 | 流形学习与度量学习 | — | — | — | — | 未开始 | 代表方法和实验 |
+| 第10章 降维与度量学习 | Isomap流形学习 | `watermelon_book/10_dimensionality_reduction/05_isomap/README.md` | `05_isomap/reference/solution.py` | `05_isomap/starter.py` | `test_isomap_reference.py` | 已验证 | 稳定k近邻图、并集对称化、Floyd测地距离、断图与MDS；含21项测试，未替代学生作答 |
+| 第10章 降维与度量学习 | 度量学习 | — | — | — | — | 未开始 | 距离矩阵参数与近邻关系代表实验 |
 | 第11章 特征选择与稀疏学习 | 子集搜索、过滤式与包裹式选择 | — | — | — | — | 未开始 | 核心方法实现 |
 | 第11章 特征选择与稀疏学习 | L1、字典学习与压缩感知 | — | — | — | — | 未开始 | 推导和实验 |
 | 第12章 计算学习理论 | PAC 与有限假设空间 | — | — | — | — | 未开始 | 推导和概念题 |
