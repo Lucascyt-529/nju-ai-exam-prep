@@ -98,6 +98,135 @@ def logistic_gradients(
     return gradient_weights, gradient_bias
 
 
+def logistic_hessian(
+    X: np.ndarray,
+    y: np.ndarray,
+    weights: np.ndarray,
+    bias: float,
+    *,
+    l2: float = 0.0,
+) -> np.ndarray:
+    """返回参数顺序为[weights..., bias]的(d+1,d+1) Hessian。"""
+    _validate_X(X)
+    _validate_y(X, y)
+    _validate_weights(X, weights)
+    _validate_l2(l2)
+    if not np.isfinite(bias):
+        raise ValueError("bias 必须是有限标量")
+    probabilities = predict_proba(X, weights, bias)
+    curvature = probabilities * (1.0 - probabilities)
+    design = np.column_stack((X, np.ones(X.shape[0], dtype=float)))
+    hessian = design.T @ (design * curvature[:, None]) / X.shape[0]
+    hessian[np.arange(X.shape[1]), np.arange(X.shape[1])] += l2
+    return hessian
+
+
+def newton_direction(
+    X: np.ndarray,
+    y: np.ndarray,
+    weights: np.ndarray,
+    bias: float,
+    *,
+    l2: float = 0.0,
+    damping: float = 0.0,
+) -> np.ndarray:
+    """求解(H+damping*I) direction = gradient。"""
+    if (
+        not isinstance(damping, (int, float, np.integer, np.floating))
+        or isinstance(damping, (bool, np.bool_))
+        or not np.isfinite(damping)
+        or damping < 0
+    ):
+        raise ValueError("damping 必须是非负有限数值")
+    gradient_weights, gradient_bias = logistic_gradients(
+        X, y, weights, bias, l2=l2
+    )
+    gradient = np.concatenate((gradient_weights, np.array([gradient_bias])))
+    hessian = logistic_hessian(X, y, weights, bias, l2=l2)
+    damped_hessian = hessian + float(damping) * np.eye(hessian.shape[0])
+    try:
+        direction = np.linalg.solve(damped_hessian, gradient)
+    except np.linalg.LinAlgError as exc:
+        raise ValueError("Hessian奇异，需增加damping或L2") from exc
+    if not np.all(np.isfinite(direction)):
+        raise FloatingPointError("牛顿方向出现非有限数值")
+    return direction
+
+
+def fit_newton(
+    X: np.ndarray,
+    y: np.ndarray,
+    *,
+    n_steps: int,
+    l2: float = 0.0,
+    damping: float = 1e-8,
+    step_size: float = 1.0,
+    max_backtracking: int = 20,
+    initial_weights: np.ndarray | None = None,
+    initial_bias: float = 0.0,
+) -> tuple[np.ndarray, float, np.ndarray]:
+    """使用阻尼Hessian和回溯步长的牛顿法，返回长度n_steps+1历史。"""
+    _validate_X(X)
+    _validate_y(X, y)
+    _validate_l2(l2)
+    if (
+        not isinstance(n_steps, (int, np.integer))
+        or isinstance(n_steps, (bool, np.bool_))
+        or n_steps < 1
+    ):
+        raise ValueError("n_steps 必须是正整数")
+    if (
+        not isinstance(step_size, (int, float, np.integer, np.floating))
+        or isinstance(step_size, (bool, np.bool_))
+        or not np.isfinite(step_size)
+        or not 0 < step_size <= 1
+    ):
+        raise ValueError("step_size 必须位于(0,1]")
+    if (
+        not isinstance(max_backtracking, (int, np.integer))
+        or isinstance(max_backtracking, (bool, np.bool_))
+        or max_backtracking < 0
+    ):
+        raise ValueError("max_backtracking 必须是非负整数")
+    if not np.isfinite(initial_bias):
+        raise ValueError("initial_bias 必须是有限标量")
+    if initial_weights is None:
+        weights = np.zeros(X.shape[1], dtype=float)
+    else:
+        _validate_weights(X, initial_weights)
+        weights = initial_weights.astype(float, copy=True)
+    bias = float(initial_bias)
+    losses = np.empty(int(n_steps) + 1, dtype=float)
+    losses[0] = logistic_loss(X, y, weights, bias, l2=l2)
+
+    for step in range(1, int(n_steps) + 1):
+        direction = newton_direction(
+            X, y, weights, bias, l2=l2, damping=damping
+        )
+        current_loss = losses[step - 1]
+        accepted = False
+        alpha = float(step_size)
+        for _ in range(int(max_backtracking) + 1):
+            candidate_weights = weights - alpha * direction[:-1]
+            candidate_bias = bias - alpha * float(direction[-1])
+            try:
+                candidate_loss = logistic_loss(
+                    X, y, candidate_weights, candidate_bias, l2=l2
+                )
+            except (ValueError, FloatingPointError):
+                candidate_loss = float("inf")
+            if np.isfinite(candidate_loss) and candidate_loss <= current_loss + 1e-15:
+                weights = candidate_weights
+                bias = candidate_bias
+                losses[step] = candidate_loss
+                accepted = True
+                break
+            alpha *= 0.5
+        if not accepted:
+            raise FloatingPointError("牛顿步回溯后仍无法得到非增损失")
+    return weights, bias, losses
+
+
 def fit_gradient_descent(
     X: np.ndarray,
     y: np.ndarray,

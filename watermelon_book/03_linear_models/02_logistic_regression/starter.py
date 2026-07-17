@@ -41,6 +41,44 @@ def logistic_gradients(
     raise NotImplementedError("请完成 logistic_gradients")
 
 
+def logistic_hessian(
+    X: np.ndarray,
+    y: np.ndarray,
+    weights: np.ndarray,
+    bias: float,
+    *,
+    l2: float = 0.0,
+) -> np.ndarray:
+    raise NotImplementedError("请完成 logistic_hessian")
+
+
+def newton_direction(
+    X: np.ndarray,
+    y: np.ndarray,
+    weights: np.ndarray,
+    bias: float,
+    *,
+    l2: float = 0.0,
+    damping: float = 0.0,
+) -> np.ndarray:
+    raise NotImplementedError("请完成 newton_direction")
+
+
+def fit_newton(
+    X: np.ndarray,
+    y: np.ndarray,
+    *,
+    n_steps: int,
+    l2: float = 0.0,
+    damping: float = 1e-8,
+    step_size: float = 1.0,
+    max_backtracking: int = 20,
+    initial_weights: np.ndarray | None = None,
+    initial_bias: float = 0.0,
+) -> tuple[np.ndarray, float, np.ndarray]:
+    raise NotImplementedError("请完成 fit_newton")
+
+
 def fit_gradient_descent(
     X: np.ndarray,
     y: np.ndarray,
