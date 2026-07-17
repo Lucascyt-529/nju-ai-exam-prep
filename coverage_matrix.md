@@ -41,7 +41,8 @@
 | 第6章 支持向量机 | 软间隔、松弛变量、hinge损失与C | `watermelon_book/06_support_vector_machines/03_soft_margin/README.md` | `03_soft_margin/reference/solution.py` | `03_soft_margin/starter.py` | `test_svm_soft_margin_reference.py` | 已验证 | 样本间隔区域、alpha状态、KKT映射与多个C的目标分量实验；含24项测试，未替代学生作答 |
 | 第6章 支持向量机 | 支持向量回归 | `watermelon_book/06_support_vector_machines/05_epsilon_svr/README.md` | `05_epsilon_svr/reference/solution.py` | `05_epsilon_svr/starter.py` | `test_svm_epsilon_svr_reference.py` | 已验证 | epsilon不敏感损失、合并双对偶系数、成对坐标优化与线性/RBF核预测；含24项测试，未替代学生作答 |
 | 第7章 贝叶斯分类器 | 最小风险贝叶斯决策与代价矩阵 | `watermelon_book/07_bayesian_classifiers/01_bayes_decision/README.md` | `01_bayes_decision/reference/solution.py` | `01_bayes_decision/starter.py` | `test_bayes_decision_reference.py` | 已验证 | 后验归一化、0/1损失、一般条件风险与非对称二分类阈值；含28项测试，未替代学生作答 |
-| 第7章 贝叶斯分类器 | 极大似然与朴素贝叶斯 | — | — | — | — | 未开始 | Python/NumPy 手写 |
+| 第7章 贝叶斯分类器 | 极大似然参数估计 | `watermelon_book/07_bayesian_classifiers/02_maximum_likelihood/README.md` | `02_maximum_likelihood/reference/solution.py` | `02_maximum_likelihood/starter.py` | `test_bayes_mle_reference.py` | 已验证 | 类先验、Bernoulli、类别分布、单/多元高斯MLE与对数似然；含17项测试，未替代学生作答 |
+| 第7章 贝叶斯分类器 | 朴素贝叶斯 | — | — | — | — | 未开始 | 离散与高斯版本，Python/NumPy手写 |
 | 第7章 贝叶斯分类器 | 半朴素贝叶斯与贝叶斯网 | — | — | — | — | 未开始 | 代表方法和推断实验 |
 | 第8章 集成学习 | AdaBoost、Bagging、随机森林 | — | — | — | — | 未开始 | 代表算法手写 |
 | 第8章 集成学习 | 结合策略与多样性 | — | — | — | — | 未开始 | 性质实验 |
