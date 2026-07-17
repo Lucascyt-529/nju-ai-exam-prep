@@ -34,7 +34,8 @@
 | 第5章 神经网络 | SOM自组织映射 | `watermelon_book/05_neural_networks/07_som/README.md` | `07_som/reference/solution.py` | `07_som/starter.py` | `test_som_reference.py` | 已验证 | BMU、Gaussian一维拓扑邻域、非原地原型更新、衰减训练与量化误差；含25项测试，未替代学生作答 |
 | 第5章 神经网络 | ART1自适应共振 | `watermelon_book/05_neural_networks/08_art1/README.md` | `08_art1/reference/solution.py` | `08_art1/starter.py` | `test_art1_reference.py` | 已验证 | 二值选择分数、警戒检验、确定性重置搜索、交集原型与增量类别；含21项测试，未替代学生作答 |
 | 第5章 神经网络 | Elman循环网络 | `watermelon_book/05_neural_networks/09_elman_network/README.md` | `09_elman_network/reference/solution.py` | `09_elman_network/starter.py` | `test_elman_network_reference.py` | 已验证 | 上下文隐状态、线性输出、整段/分段前向、状态续接与重置；含19项测试，未实现BPTT，未替代学生作答 |
-| 第5章 神经网络 | 其他常见网络 | — | — | — | — | 未开始 | 待按实际教材目录核对后建设级联相关与Boltzmann等代表性原理和实验 |
+| 第5章 神经网络 | 级联相关网络 | `watermelon_book/05_neural_networks/10_cascade_correlation/README.md` | `10_cascade_correlation/reference/solution.py` | `10_cascade_correlation/starter.py` | `test_cascade_correlation_reference.py` | 已验证 | 候选-残差相关性、冻结连接、逐步增长与输出层重训；含14项测试，未替代学生作答 |
+| 第5章 神经网络 | Boltzmann机 | — | — | — | — | 未开始 | 能量、概率分布与采样代表实验 |
 | 第6章 支持向量机 | 超平面、函数间隔与几何间隔 | `watermelon_book/06_support_vector_machines/01_margin_geometry/README.md` | `01_margin_geometry/reference/solution.py` | `01_margin_geometry/starter.py` | `test_svm_margin_geometry_reference.py` | 已验证 | 得分、点到超平面距离、正比例缩放不变性、规范化和最小间隔点；含19项测试，未替代学生作答 |
 | 第6章 支持向量机 | 线性对偶优化与SMO | `watermelon_book/06_support_vector_machines/02_linear_smo/README.md` | `02_linear_smo/reference/solution.py` | `02_linear_smo/starter.py` | `test_svm_linear_smo_reference.py` | 已验证 | Gram矩阵、盒/等式约束、确定性成对更新、退化端点、KKT与原始-对偶目标；含20项测试，未替代学生作答 |
 | 第6章 支持向量机 | 核函数与非线性分类 | `watermelon_book/06_support_vector_machines/04_kernel_svm/README.md` | `04_kernel_svm/reference/solution.py` | `04_kernel_svm/starter.py` | `test_svm_kernel_reference.py` | 已验证 | 线性/多项式/RBF核、核化SMO与仅支持向量预测；含24项测试，未替代学生作答 |
