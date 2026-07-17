@@ -955,9 +955,11 @@ Phase 12 第三十七批已完成并纳入本批提交：
   - 学习者能够解释 `np.isfinite(matrix)` 返回同形布尔矩阵，`if` 需要由 `np.all()` 归约为单个布尔值；该证据记录为首轮理解，不替代后续模型场景复验。
   - 学习者已在反馈后完成reshape专题五个函数：一维/列数组往返、真实转置、左侧常数列和样本轴拼接；曾混淆reshape与转置、形状元组与函数参数、axis=0/1拼接，详见`bug_book/002_reshape_transpose_concatenate.md`。
   - reshape专题已完成右侧常数列与不同样本数批次拼接变式；右侧函数曾把`X.shape[0]`误写为`np.shape[0]`，经一次API纠正后通过，后续在线性模型增广矩阵中继续复验。
+  - 索引专题已完成花式行选择、一维布尔掩码、任意目标列切分和固定种子同步打乱；学习者能解释分别打乱`X/y`会破坏监督对应，并理解`Generator`、seed与permutation的可复现机制。
+  - 条件筛选初次把`(n,)`布尔数组多包一层形成错误结构，现已纠正并记录于`bug_book/003_boolean_mask_and_synchronized_indices.md`；后续训练/验证划分继续复验。
   - 用户要求后续一次列完本轮问题再集中修改，并质疑重复工程校验的考试价值；教学规则已调整为机试必要校验优先，完整防御式校验只集中教学一次。
   - 用户已决定先暂停继续扩建，开始使用现有仓库学习。
-  - 下一次互动进入`02_numpy_basics/02_indexing_filtering/`，先预测花式索引、布尔掩码与同步打乱，再集中完成学生函数。
+  - 下一次互动进入`02_numpy_basics/03_broadcasting/`，先预测按列中心化与`(n,1)-(n,)`静默扩张，再集中完成学生函数。
 
 个人学习证据与详细错误以 `progress.md` 和 `bug_book/` 为准。
 
@@ -983,7 +985,8 @@ Phase 12 第三十七批已完成并纳入本批提交：
 - 日期：2026-07-17
 - 当前专用测试：NumPy reshape专题学生版17项、参考版3项，共20项通过
 - 全量测试：`python -m pytest -q`
-- 结果：2073项通过（43.14秒）
+- 结果：2081项通过（32.89秒）
+- 索引专题专项验证：`python -m pytest -q tests/test_numpy_indexing_student.py tests/test_numpy_indexing_reference.py`，14项通过（0.44秒）
 - 依赖检查：`python -m pip check`，未发现冲突
 - 学习闭环：reshape专题正常功能、真实转置数值、左右常数列、不同样本数的样本轴拼接、输入不变性与边界形状均已验证；错误复盘已记录，后续模型场景继续复验
 - Git 状态要求：本批推送后本地 `main` 应与 `origin/main` 一致；恢复时重新运行 `git status`，不要把本行当作实时状态
