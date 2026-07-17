@@ -132,4 +132,3 @@ def test_sample_solve_and_cli_modes(tmp_path: Path) -> None:
         check=True,
     )
     assert output.read_bytes() == (KNAPSACK / "expected" / "sample_output.txt").read_bytes()
-

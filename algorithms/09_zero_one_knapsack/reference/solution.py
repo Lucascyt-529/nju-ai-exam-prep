@@ -143,4 +143,3 @@ def run_cli(argv: list[str] | None = None) -> None:
 
 if __name__ == "__main__":
     run_cli()
-

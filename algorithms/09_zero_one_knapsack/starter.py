@@ -25,4 +25,3 @@ def zero_one_knapsack(
 
 def solve(text: str) -> str:
     raise NotImplementedError("请完成 solve")
-
