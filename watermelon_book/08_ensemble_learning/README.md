@@ -9,5 +9,6 @@
 | 3 | `03_random_forest/`：Bootstrap与随机特征子空间树桩森林 | 已建参考闭环 |
 | 4 | `04_combination_diversity/`：平均/投票、成对多样性与误差-分歧 | 已建参考闭环 |
 | 5 | `05_stacking/`：折外次级数据、岭回归组合器与完整预测 | 已建参考闭环 |
+| 6 | `06_boosting_exponential_view/`：加性模型、指数风险、归一化因子与重采样 | 已建参考闭环 |
 
-当前已完成AdaBoost、Bootstrap/Bagging/OOB、随机子空间森林、结合策略/多样性及Stacking学习法的主要编程主线。覆盖状态仍以逐节审计表及实际测试为准，不能据此声称学习者已经掌握第8章。
+当前已完成AdaBoost算法及其指数风险推导、Bootstrap/Bagging/OOB、随机子空间森林、结合策略/多样性及Stacking学习法的主要编程主线。覆盖状态仍以逐节审计表及实际测试为准，不能据此声称学习者已经掌握第8章。
