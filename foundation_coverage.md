@@ -46,13 +46,14 @@
 | 线性回归CSV程序 | `integrated_tasks/02_linear_regression_csv/` | 已验证 |
 | 逻辑回归CSV程序 | `integrated_tasks/03_logistic_regression_csv/` | 已验证 |
 | K-means无监督CSV程序 | `integrated_tasks/04_kmeans_csv/` | 已验证 |
+| 混合特征分类与独立状态恢复 | `integrated_tasks/05_mixed_feature_classification/` | 已验证 |
 | 120分钟混合诊断卷 | `mock_exams/01_foundation_diagnostic/` | 参考与评分已验证，学习者未作答 |
 
 ## 仍需建设的基础缺口
 
 按当前优先级：
 
-1. 类别词表JSON与NumPy模型包组合成一份完整混合特征预测任务；
-2. 学习者完成基础starter后，建立真正的个人掌握证据和错题记录。
+1. 学习者完成基础starter后，建立真正的个人掌握证据和错题记录；
+2. 根据后续模拟暴露的问题，补充新的完整程序边界。
 
 后续每补一项都必须有讲解、学生入口、参考实现、边界测试和至少一道迁移题。

@@ -1,0 +1,5 @@
+sample_id,age,monthly_spend,city,device,label
+V01,24,140,Nanjing,mobile,0
+V02,29,200,Suzhou,desktop,0
+V03,36,270,Nanjing,desktop,1
+V04,42,320,Hangzhou,tablet,1

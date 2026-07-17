@@ -1,0 +1,13 @@
+sample_id,age,monthly_spend,city,device,label
+T01,20,100,Nanjing,mobile,0
+T02,22,120,Suzhou,desktop,0
+T03,25,,Nanjing,desktop,0
+T04,28,180,Suzhou,mobile,0
+T05,30,220,Nanjing,mobile,1
+T06,35,250,Suzhou,desktop,1
+T07,40,300,Nanjing,desktop,1
+T08,45,350,Suzhou,mobile,1
+T09,,160,Nanjing,desktop,0
+T10,38,,Suzhou,mobile,1
+T11,27,210,Suzhou,desktop,0
+T12,33,240,Nanjing,mobile,1
