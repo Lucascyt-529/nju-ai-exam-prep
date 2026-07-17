@@ -1,0 +1,4 @@
+feature,mean,std,missing_count
+feature_1,3.000000,1.414214,1
+feature_2,27.500000,13.228757,1
+feature_3,8.000000,2.000000,1
