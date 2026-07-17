@@ -31,6 +31,7 @@
 | --- | --- | --- | --- |
 | 训练集均值填补与标准化 | `03_data_processing/01_imputation_standardization/` | 已验证 | 尚未独立完成 |
 | 训练词表、未知类别、one-hot与JSON元数据 | `02_categorical_encoding/` | 已验证 | 尚未独立完成 |
+| mini-batch下标、同步取样与可复现训练流 | `03_minibatch_training/` | 已验证 | 尚未独立完成 |
 | 留出、分层、K折、Bootstrap | `watermelon_book/02_model_evaluation/01_data_splitting/` | 已验证 | 尚未独立完成 |
 | Series/DataFrame、CSV、清洗 | `04_pandas_basics/01_...03_...` | 已验证 | 尚未独立完成 |
 | groupby/merge、NumPy桥接、pivot/melt | `04_pandas_basics/04_...06_...` | 已验证 | 尚未独立完成 |
@@ -50,9 +51,8 @@
 
 按当前优先级：
 
-1. mini-batch索引、可复现随机数与训练循环数据流；
-2. 异常值诊断和仅用训练集拟合的稳健处理边界；
-3. 类别词表JSON与NumPy模型包组合成一份完整混合特征预测任务；
-4. 学习者完成基础starter后，建立真正的个人掌握证据和错题记录。
+1. 异常值诊断和仅用训练集拟合的稳健处理边界；
+2. 类别词表JSON与NumPy模型包组合成一份完整混合特征预测任务；
+3. 学习者完成基础starter后，建立真正的个人掌握证据和错题记录。
 
 后续每补一项都必须有讲解、学生入口、参考实现、边界测试和至少一道迁移题。
