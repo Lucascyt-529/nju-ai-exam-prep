@@ -28,7 +28,7 @@
 | 第5章 神经网络 | 神经元模型与感知机 | `watermelon_book/05_neural_networks/01_perceptron/README.md` | `01_perceptron/reference/solution.py` | `01_perceptron/starter.py` | `test_perceptron_reference.py` | 已验证 | 线性得分、阈值预测、逐样本更新、可分收敛与XOR反例；含25项测试，未替代学生作答 |
 | 第5章 神经网络 | 单隐层网络前向传播与标签形状 | `watermelon_book/05_neural_networks/02_forward_propagation/README.md` | `02_forward_propagation/reference/solution.py` | `02_forward_propagation/starter.py` | `test_neural_network_forward_reference.py` | 已验证 | 稳定sigmoid、可复现初始化、前向缓存、显式 `(n,)->(n,1)` 与稳定logits交叉熵；未替代学生作答 |
 | 第5章 神经网络 | BP反向传播与数值梯度检查 | `watermelon_book/05_neural_networks/03_backpropagation/README.md` | `03_backpropagation/reference/solution.py` | `03_backpropagation/starter.py` | `test_neural_network_backprop_reference.py` | 已验证 | 输出层/隐层解析梯度、严格缓存和逐参数中心有限差分；含22项测试，未替代学生作答 |
-| 第5章 神经网络 | 完整BP训练与预测 | — | — | — | — | 未开始 | 梯度下降、损失性质与XOR拟合 |
+| 第5章 神经网络 | 完整BP训练与预测 | `watermelon_book/05_neural_networks/04_bp_training/README.md` | `04_bp_training/reference/solution.py` | `04_bp_training/starter.py` | `test_neural_network_training_reference.py` | 已验证 | 非原地梯度下降、初始/逐轮损失、列形状预测、固定配置XOR拟合；含25项测试，未替代学生作答 |
 | 第5章 神经网络 | 全局最小、局部极小与其他常见网络 | — | — | — | — | 未开始 | 推导和小实验 |
 | 第6章 支持向量机 | 间隔、对偶与核函数 | — | — | — | — | 未开始 | 核心版本手写 |
 | 第6章 支持向量机 | 软间隔、正则化、支持向量回归 | — | — | — | — | 未开始 | 推导与代表实现 |
