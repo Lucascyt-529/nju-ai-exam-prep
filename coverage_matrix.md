@@ -45,7 +45,8 @@
 | 第7章 贝叶斯分类器 | 朴素贝叶斯 | `watermelon_book/07_bayesian_classifiers/03_naive_bayes/README.md` | `03_naive_bayes/reference/solution.py` | `03_naive_bayes/starter.py` | `test_naive_bayes_reference.py` | 已验证 | 离散Laplace/未知桶、对数概率、高斯方差下限与稳定后验；含21项测试，未替代学生作答 |
 | 第7章 贝叶斯分类器 | AODE半朴素贝叶斯 | `watermelon_book/07_bayesian_classifiers/04_aode/README.md` | `04_aode/reference/solution.py` | `04_aode/starter.py` | `test_aode_reference.py` | 已验证 | 超父频数阈值、SPODE对数分数、平均汇总与朴素回退；含19项测试，未替代学生作答 |
 | 第7章 贝叶斯分类器 | 贝叶斯网与推断 | `watermelon_book/07_bayesian_classifiers/05_bayesian_network/README.md` | `05_bayesian_network/reference/solution.py` | `05_bayesian_network/starter.py` | `test_bayesian_network_reference.py` | 已验证 | 二值DAG/CPT校验、联合分解、证据求和与枚举精确后验；含14项测试，未替代学生作答 |
-| 第8章 集成学习 | AdaBoost、Bagging、随机森林 | — | — | — | — | 未开始 | 代表算法手写 |
+| 第8章 集成学习 | AdaBoost与加权决策树桩 | `watermelon_book/08_ensemble_learning/01_adaboost/README.md` | `01_adaboost/reference/solution.py` | `01_adaboost/starter.py` | `test_adaboost_reference.py` | 已验证 | 加权错误、分类器权重、样本权重更新、树桩枚举与强分类器；含20项测试，未替代学生作答 |
+| 第8章 集成学习 | Bagging与随机森林 | — | — | — | — | 未开始 | Bootstrap、袋外评估与特征子采样 |
 | 第8章 集成学习 | 结合策略与多样性 | — | — | — | — | 未开始 | 性质实验 |
 | 第9章 聚类 | 距离度量与性能度量 | — | — | — | — | 未开始 | NumPy 实现 |
 | 第9章 聚类 | 原型、层次与密度聚类 | — | — | — | — | 未开始 | 代表算法手写 |
