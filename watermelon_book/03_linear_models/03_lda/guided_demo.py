@@ -1,6 +1,12 @@
-"""运行前手算类均值、投影方向和阈值。"""
+"""手算二分类方向，再观察多分类散度与K-1维上限。"""
 
 import numpy as np
+
+from reference.solution import (
+    fit_multiclass_lda,
+    multiclass_scatter_matrices,
+    predict_multiclass_lda,
+)
 
 
 def main() -> None:
@@ -20,6 +26,30 @@ def main() -> None:
     print("weights:", weights)
     print("threshold:", threshold)
     print("projections:", X @ weights)
+
+    X_multi = np.array(
+        [
+            [-2.2, 0.2], [-2.0, 0.0], [-1.8, -0.2],
+            [2.2, 0.2], [2.0, 0.0], [1.8, -0.2],
+            [0.2, 3.2], [0.0, 3.0], [-0.2, 2.8],
+        ]
+    )
+    y_multi = np.array([10, 10, 10, 20, 20, 20, 30, 30, 30])
+    classes, global_mean, means, within, between, total = (
+        multiclass_scatter_matrices(X_multi, y_multi)
+    )
+    classes, projection, projected_centroids, eigenvalues = fit_multiclass_lda(
+        X_multi, y_multi, regularization=1e-6
+    )
+    prediction = predict_multiclass_lda(
+        X_multi, classes, projection, projected_centroids
+    )
+    print("multiclass classes:", classes)
+    print("global/class means shapes:", global_mean.shape, means.shape)
+    print("St equals Sw + Sb:", np.allclose(total, within + between))
+    print("projection shape (at most K-1):", projection.shape)
+    print("generalized eigenvalues:", np.round(eigenvalues, 6))
+    print("training prediction:", prediction)
 
 
 if __name__ == "__main__":
