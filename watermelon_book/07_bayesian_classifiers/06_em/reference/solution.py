@@ -27,6 +27,34 @@ def maximization_step(heads,tosses,responsibilities):
     probabilities=np.clip(probabilities,1e-12,1-1e-12); return mixing,probabilities
 def observed_log_likelihood(heads,tosses,mixing,probabilities):
     _data(heads,tosses); _parameters(mixing,probabilities); return float(np.sum(_logsumexp_rows(_component_logs(heads,tosses,mixing,probabilities,True))))
+def _responsibilities(responsibilities,n):
+    if not isinstance(responsibilities,np.ndarray) or responsibilities.shape!=(n,2) or not np.issubdtype(responsibilities.dtype,np.number) or not np.all(np.isfinite(responsibilities)) or np.any(responsibilities<0) or not np.allclose(responsibilities.sum(axis=1),1): raise ValueError("responsibilities必须是逐行和为1的(n,2)非负数组")
+    return responsibilities.astype(float,copy=False)
+def expected_complete_log_likelihood(heads,tosses,responsibilities,mixing,probabilities):
+    _data(heads,tosses); _parameters(mixing,probabilities); r=_responsibilities(responsibilities,heads.size)
+    return float(np.sum(r*_component_logs(heads,tosses,mixing,probabilities,True)))
+def responsibility_entropy(responsibilities):
+    if not isinstance(responsibilities,np.ndarray) or responsibilities.ndim!=2 or responsibilities.shape[1]!=2 or responsibilities.shape[0]==0: raise ValueError("responsibilities必须是非空(n,2)数组")
+    r=_responsibilities(responsibilities,responsibilities.shape[0]); positive=r>0
+    return float(-np.sum(r[positive]*np.log(r[positive])))
+def evidence_lower_bound(heads,tosses,responsibilities,mixing,probabilities):
+    return expected_complete_log_likelihood(heads,tosses,responsibilities,mixing,probabilities)+responsibility_entropy(responsibilities)
+def posterior_kl_gap(heads,tosses,responsibilities,mixing,probabilities):
+    _data(heads,tosses); _parameters(mixing,probabilities); r=_responsibilities(responsibilities,heads.size)
+    posterior=expectation_step(heads,tosses,mixing,probabilities); positive=r>0
+    return float(np.sum(r[positive]*(np.log(r[positive])-np.log(posterior[positive]))))
+def em_step_diagnostics(heads,tosses,mixing,probabilities):
+    _data(heads,tosses); _parameters(mixing,probabilities)
+    old_mixing=mixing.astype(float,copy=True); old_probabilities=probabilities.astype(float,copy=True)
+    responsibilities=expectation_step(heads,tosses,old_mixing,old_probabilities)
+    new_mixing,new_probabilities=maximization_step(heads,tosses,responsibilities)
+    old_likelihood=observed_log_likelihood(heads,tosses,old_mixing,old_probabilities)
+    new_likelihood=observed_log_likelihood(heads,tosses,new_mixing,new_probabilities)
+    old_bound=evidence_lower_bound(heads,tosses,responsibilities,old_mixing,old_probabilities)
+    after_m_bound=evidence_lower_bound(heads,tosses,responsibilities,new_mixing,new_probabilities)
+    new_responsibilities=expectation_step(heads,tosses,new_mixing,new_probabilities)
+    tight_new_bound=evidence_lower_bound(heads,tosses,new_responsibilities,new_mixing,new_probabilities)
+    return {"responsibilities":responsibilities,"new_responsibilities":new_responsibilities,"new_mixing":new_mixing,"new_probabilities":new_probabilities,"old_likelihood":old_likelihood,"new_likelihood":new_likelihood,"old_bound":old_bound,"after_m_bound":after_m_bound,"tight_new_bound":tight_new_bound}
 def fit_coin_mixture_em(heads,tosses,*,initial_mixing=None,initial_probabilities=None,max_iterations=200,tolerance=1e-9):
     _data(heads,tosses); mixing=np.array([.5,.5]) if initial_mixing is None else np.asarray(initial_mixing,dtype=float).copy(); probabilities=np.array([.3,.7]) if initial_probabilities is None else np.asarray(initial_probabilities,dtype=float).copy(); _parameters(mixing,probabilities)
     if isinstance(max_iterations,(bool,np.bool_)) or not isinstance(max_iterations,(int,np.integer)) or max_iterations<=0: raise ValueError("max_iterations必须是正整数")
