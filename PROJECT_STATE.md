@@ -959,9 +959,10 @@ Phase 12 第三十七批已完成并纳入本批提交：
   - 条件筛选初次把`(n,)`布尔数组多包一层形成错误结构，现已纠正并记录于`bug_book/003_boolean_mask_and_synchronized_indices.md`；后续训练/验证划分继续复验。
   - 广播专题已完成按特征偏移、按样本偏移、外部均值中心化和安全标准化；循环标量赋值与数组别名问题已纠正并记录于`bug_book/004_broadcasting_copy_and_assignment.md`。
   - 矩阵乘法专题已完成二维矩阵乘积、单输出/多输出线性分数和特征Gram矩阵；学习者能区分`*`与`@`，并完成`X.T @ error:(d,)`的梯度形状迁移解释。
+  - 缺失值填补与标准化专题已完成学生核心实现；训练集拟合、测试集复用、按特征统计量和常数列安全尺度已验证，相关首次错误记录于`bug_book/005_fit_transform_and_axis.md`。
   - 用户要求后续一次列完本轮问题再集中修改，并质疑重复工程校验的考试价值；教学规则已调整为机试必要校验优先，完整防御式校验只集中教学一次。
   - 用户已决定先暂停继续扩建，开始使用现有仓库学习。
-  - 下一次互动进入最基础的数据清洗与预处理，随后按既定顺序转入机器学习主体。
+  - 下一次互动转入机器学习主体，按既定顺序从模型评估与线性模型开始；预处理在完整模型任务中继续复验。
 
 个人学习证据与详细错误以 `progress.md` 和 `bug_book/` 为准。
 
@@ -987,10 +988,11 @@ Phase 12 第三十七批已完成并纳入本批提交：
 - 日期：2026-07-17
 - 当前专用测试：NumPy reshape专题学生版17项、参考版3项，共20项通过
 - 全量测试：`python -m pytest -q`
-- 结果：2096项通过（40.54秒）
+- 结果：2101项通过（41.67秒）
 - 索引专题专项验证：`python -m pytest -q tests/test_numpy_indexing_student.py tests/test_numpy_indexing_reference.py`，14项通过（0.44秒）
 - 广播专题专项验证：`python -m pytest -q tests/test_numpy_broadcasting_student.py tests/test_numpy_broadcasting_reference.py`，15项通过（0.41秒）
 - 矩阵乘法专题专项验证：`python -m pytest -q tests/test_numpy_matrix_multiplication_student.py tests/test_numpy_matrix_multiplication_reference.py`，10项通过（0.35秒）
+- 缺失值填补与标准化专项验证：`python -m pytest -q tests/test_imputation_standardization_student.py tests/test_data_processing_reference.py`，11项通过（0.30秒）
 - 依赖检查：`python -m pip check`，未发现冲突
 - 学习闭环：reshape专题正常功能、真实转置数值、左右常数列、不同样本数的样本轴拼接、输入不变性与边界形状均已验证；错误复盘已记录，后续模型场景继续复验
 - Git 状态要求：本批推送后本地 `main` 应与 `origin/main` 一致；恢复时重新运行 `git status`，不要把本行当作实时状态
