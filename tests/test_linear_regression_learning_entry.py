@@ -16,7 +16,7 @@ def load_module(name: str, path: Path):
     return module
 
 
-def test_demo_shows_expected_output_and_unfinished_result() -> None:
+def test_demo_shows_shapes_and_unfinished_result() -> None:
     result = subprocess.run(
         [sys.executable, str(TOPIC / "demo.py")],
         cwd=ROOT,
@@ -25,9 +25,9 @@ def test_demo_shows_expected_output_and_unfinished_result() -> None:
         text=True,
     )
     assert result.returncode == 0, result.stderr
-    assert "prediction:" in result.stdout
+    assert "prediction" in result.stdout
     assert "predict" in result.stdout
-    assert "shape" not in result.stdout
+    assert "shapes:" in result.stdout
     assert "Traceback" not in result.stderr
 
 
@@ -47,5 +47,47 @@ def test_simple_checks_accept_reference_implementation(monkeypatch, capsys) -> N
 
     assert checker.main() == 0
     output = capsys.readouterr().out
-    assert "5/5" in output
+    assert "12/12" in output
     assert "True" in output
+
+
+def test_demo_accepts_reference_implementation(monkeypatch, capsys) -> None:
+    monkeypatch.syspath_prepend(str(TOPIC))
+    demo = load_module("linear_regression_demo", TOPIC / "demo.py")
+    solution = load_module(
+        "linear_regression_reference_for_demo", TOPIC / "reference" / "solution.py"
+    )
+    demo.starter = solution
+    demo.main()
+    output = capsys.readouterr().out
+    assert "loss_history 前5项" in output
+    assert "最小二乘一致 = True" in output
+
+
+def test_check_rejects_prediction_column_shape(monkeypatch, capsys) -> None:
+    monkeypatch.syspath_prepend(str(TOPIC))
+    checker = load_module("linear_regression_shape_checker", TOPIC / "check.py")
+    solution = load_module(
+        "linear_regression_reference_for_shape", TOPIC / "reference" / "solution.py"
+    )
+
+    class WrongShape:
+        def __getattr__(self, name):
+            return getattr(solution, name)
+
+        @staticmethod
+        def predict(X, w, b):
+            return solution.predict(X, w, b).reshape(-1, 1)
+
+    checker.starter = WrongShape()
+    assert checker.main() == 1
+    output = capsys.readouterr().out
+    assert "2. predict shape" in output
+    assert "通过: False" in output
+
+
+def test_loss_history_contract_is_documented() -> None:
+    readme = (TOPIC / "README.md").read_text(encoding="utf-8")
+    starter = (TOPIC / "starter.py").read_text(encoding="utf-8")
+    assert "n_steps + 1" in readme
+    assert "n_steps + 1" in starter

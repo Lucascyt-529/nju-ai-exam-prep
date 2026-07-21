@@ -35,6 +35,26 @@ prediction = X @ w + b
 
 数组形状、文件列数、缺失值和非法内容以后在文件读写与数据处理模块集中复验。
 
+## 本专题的 shape 约定
+
+这里不要求你编写全面的输入校验，但必须能在纸上追踪参与计算的 shape：
+
+```text
+X:            (n_samples, n_features)
+y:            (n_samples,)
+w:            (n_features,)
+prediction:   (n_samples,)
+error:        (n_samples,)
+gradient_w:   (n_features,)
+gradient_b:   Python float
+loss_history: 一维数组，长度为 n_steps + 1
+```
+
+本专题始终使用一维标签 `(n,)`，不与二维列数组 `(n, 1)` 混用。若 `X.T` 的
+shape 是 `(n_features, n_samples)`，而 `error` 是 `(n_samples,)`，那么
+`X.T @ error` 会沿样本维求和，留下每个特征各一个梯度，因此结果是
+`(n_features,)`。
+
 ## 完整算法流程
 
 ```text
@@ -122,9 +142,11 @@ python 02_machine_learning/01_linear_regression/demo.py
 python 02_machine_learning/01_linear_regression/check.py
 ```
 
-`demo.py` 只展示一组线性预测：给定 `X、w、b`，同时打印期望输出和你写出的实际输出，供你自己核对。
+`demo.py` 从零参数开始展示预测、误差、损失、梯度、一次更新、短程训练、
+损失历史和最小二乘结果。它只调用你写的函数，不导入参考实现。
 
-`check.py` 使用同样的方式核对五个函数。它会直接打印每项的期望值、实际值和是否一致，不要求理解 pytest，也不包含严格测试中的边界校验。
+`check.py` 按实现顺序核对数值、关键 shape、一次更新、双特征和输入未被修改。
+每项都会打印期望、实际和通过状态；未完成函数时会在对应步骤友好停止。
 
 ## 常见错误
 
