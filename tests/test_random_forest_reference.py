@@ -8,7 +8,7 @@ import numpy as np
 import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
-TOPIC = ROOT / "watermelon_book" / "08_ensemble_learning" / "03_random_forest"
+TOPIC = ROOT / "02_machine_learning" / "09_ensemble_learning" / "03_random_forest"
 spec = importlib.util.spec_from_file_location("random_forest_solution", TOPIC / "reference" / "solution.py")
 assert spec is not None and spec.loader is not None
 solution = importlib.util.module_from_spec(spec); spec.loader.exec_module(solution)
@@ -110,10 +110,9 @@ def test_correlation_rejects_bad_prediction_matrices() -> None:
 
 
 def test_guided_demo_runs_and_reports_subsets_features_and_correlation() -> None:
-    result = subprocess.run([sys.executable, str(TOPIC / "guided_demo.py")], cwd=ROOT,
+    result = subprocess.run([sys.executable, str(TOPIC / "reference_demo.py")], cwd=ROOT,
         check=True, capture_output=True, text=True, encoding="utf-8", env={**os.environ, "PYTHONUTF8": "1"})
     assert "feature subsets shape: (12, 2)" in result.stdout
     assert "chosen features:" in result.stdout
     assert "mean prediction correlation:" in result.stdout
     assert "ensemble prediction:" in result.stdout
-

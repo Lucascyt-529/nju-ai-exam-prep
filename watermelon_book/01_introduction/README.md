@@ -7,4 +7,4 @@
 | `01_hypothesis_preference_nfl/` | 已建参考闭环 |
 | `02_history_applications/` | 已建原创知识卡与迁移练习 |
 
-2016年第1版第1章顶层正文小节已有对应证据；这不表示学习者已经掌握，实际学习状态仍以根目录 `progress.md` 为准。
+2016年第1版第1章顶层正文小节已有对应证据；这不表示学习者已经掌握，实际学习状态仍以根目录 [LEARNING_STATUS.md](../../LEARNING_STATUS.md) 为准。

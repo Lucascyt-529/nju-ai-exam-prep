@@ -5,7 +5,7 @@ import numpy as np
 import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
-SOLUTION = ROOT / "watermelon_book" / "02_model_evaluation_selection" / "02_metrics" / "reference" / "solution.py"
+SOLUTION = ROOT / "02_machine_learning" / "00_model_evaluation" / "reference" / "solution.py"
 spec = importlib.util.spec_from_file_location("cost_curve_solution", SOLUTION)
 assert spec is not None and spec.loader is not None
 solution = importlib.util.module_from_spec(spec); spec.loader.exec_module(solution)

@@ -8,7 +8,7 @@ import numpy as np
 import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
-TOPIC = ROOT / "watermelon_book" / "08_ensemble_learning" / "02_bagging_oob"
+TOPIC = ROOT / "02_machine_learning" / "09_ensemble_learning" / "02_bagging_oob"
 spec = importlib.util.spec_from_file_location("bagging_solution", TOPIC / "reference" / "solution.py")
 assert spec is not None and spec.loader is not None
 solution = importlib.util.module_from_spec(spec); spec.loader.exec_module(solution)
@@ -120,10 +120,9 @@ def test_fit_and_prediction_reject_bad_shapes_labels_and_feature_count() -> None
 
 
 def test_guided_demo_runs_and_reports_bootstrap_oob_and_coverage() -> None:
-    result = subprocess.run([sys.executable, str(TOPIC / "guided_demo.py")], cwd=ROOT,
+    result = subprocess.run([sys.executable, str(TOPIC / "reference_demo.py")], cwd=ROOT,
         check=True, capture_output=True, text=True, encoding="utf-8", env={**os.environ, "PYTHONUTF8": "1"})
     assert "bootstrap shape: (20, 8)" in result.stdout
     assert "first OOB: [0, 2, 3]" in result.stdout
     assert "covered: 8 / 8" in result.stdout
     assert "OOB accuracy:" in result.stdout
-

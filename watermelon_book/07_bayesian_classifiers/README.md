@@ -6,7 +6,7 @@
 | --- | --- | --- |
 | 1 | `01_bayes_decision/`：后验概率、条件风险与最小风险决策 | 已建参考闭环 |
 | 2 | `02_maximum_likelihood/`：离散、Bernoulli与高斯MLE | 已建参考闭环 |
-| 3 | `03_naive_bayes/`：离散/高斯朴素贝叶斯 | 已建参考闭环 |
+| 3 | [新朴素贝叶斯入口](../../02_machine_learning/07_naive_bayes/README.md)：离散/高斯朴素贝叶斯 | 已迁移 |
 | 4 | `04_aode/`：AODE半朴素贝叶斯 | 已建参考闭环 |
 | 5 | `07_tan/`：条件互信息、最大生成树与树增强朴素贝叶斯 | 已建参考闭环 |
 | 6 | `05_bayesian_network/`：二值DAG、CPT/结构学习、精确与Gibbs推断 | 已建参考闭环 |

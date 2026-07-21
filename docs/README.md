@@ -1,0 +1,9 @@
+# 管理与参考文档
+
+这里不是日常学习首页。
+
+- [exam/](exam/)：公开考试证据与训练取舍；
+- [curriculum/](curriculum/)：学习方法、清单与完整覆盖矩阵；
+- [project_management/](project_management/)：建设状态、原始任务书、历史记录与迁移日志。
+
+日常学习请回到根目录 [README.md](../README.md)。

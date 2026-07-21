@@ -9,7 +9,7 @@ import pytest
 
 
 ROOT = Path(__file__).resolve().parents[1]
-TOPIC = ROOT / "watermelon_book" / "10_dimensionality_reduction" / "03_pca"
+TOPIC = ROOT / "02_machine_learning" / "04_pca"
 spec = importlib.util.spec_from_file_location("pca_solution", TOPIC / "reference" / "solution.py")
 assert spec is not None and spec.loader is not None
 solution = importlib.util.module_from_spec(spec)
@@ -151,7 +151,7 @@ def test_reconstruction_mse_rejects_shape_mismatch() -> None:
 
 def test_guided_demo_runs_and_reports_shapes_and_information_loss() -> None:
     result = subprocess.run(
-        [sys.executable, str(TOPIC / "guided_demo.py")],
+        [sys.executable, str(TOPIC / "reference_demo.py")],
         cwd=ROOT,
         check=True,
         capture_output=True,

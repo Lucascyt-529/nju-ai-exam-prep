@@ -9,9 +9,8 @@ import pytest
 ROOT = Path(__file__).resolve().parents[1]
 SOLUTION = (
     ROOT
-    / "watermelon_book"
-    / "04_decision_trees"
-    / "01_discrete_tree"
+    / "02_machine_learning"
+    / "06_decision_tree"
     / "reference"
     / "solution.py"
 )

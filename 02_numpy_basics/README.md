@@ -13,4 +13,4 @@
 | 5 | `03_broadcasting/`：特征向量、样本列向量与安全标准化 | 已建参考闭环，等待学生练习 |
 | 6 | `04_matrix_multiplication/`：矩阵乘法、线性输出与 Gram 矩阵 | 已建参考闭环，等待学生练习 |
 
-任何专题都按 `learning_method.md` 执行：先预测，再运行；先小步补全，再独立实现；最后完成变式题。
+任何专题都按 [学习方法](../docs/curriculum/learning_method.md) 执行：先预测，再运行；先小步补全，再独立实现；最后完成变式题。

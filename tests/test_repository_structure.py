@@ -6,27 +6,43 @@ ROOT = Path(__file__).resolve().parents[1]
 
 def test_required_control_files_exist() -> None:
     required_files = {
-        "README.md",
-        "START_HERE.md",
-        "AGENTS.md",
-        "CONTRIBUTING.md",
-        "historical_baseline.md",
-        "learning_method.md",
-        "syllabus.md",
-        "coverage_matrix.md",
-        "progress.md",
-        "PROJECT_STATE.md",
-        "requirements.txt",
-        "pytest.ini",
+        Path("README.md"),
+        Path("START_HERE.md"),
+        Path("AGENTS.md"),
+        Path("CONTRIBUTING.md"),
+        Path("LEARNING_STATUS.md"),
+        Path("docs/project_management/BUILD_STATUS.md"),
+        Path("docs/project_management/historical_baseline.md"),
+        Path("docs/project_management/legacy_progress.md"),
+        Path("docs/curriculum/learning_method.md"),
+        Path("docs/curriculum/syllabus.md"),
+        Path("docs/curriculum/full_coverage_matrix.md"),
+        Path("requirements.txt"),
+        Path("pytest.ini"),
     }
 
-    missing = sorted(name for name in required_files if not (ROOT / name).is_file())
+    missing = sorted(str(path) for path in required_files if not (ROOT / path).is_file())
 
     assert not missing, f"缺少仓库基础文件: {missing}"
 
 
+def test_moved_management_files_are_not_duplicated_at_root() -> None:
+    old_root_files = {
+        "PROJECT_STATE.md",
+        "progress.md",
+        "coverage_matrix.md",
+        "foundation_coverage.md",
+        "historical_baseline.md",
+        "learning_method.md",
+        "syllabus.md",
+        "exam_evidence.md",
+    }
+    duplicates = sorted(name for name in old_root_files if (ROOT / name).exists())
+    assert not duplicates, f"管理文档不应在根目录保留重复副本: {duplicates}"
+
+
 def test_markdown_files_are_valid_utf8() -> None:
-    markdown_files = ROOT.glob("*.md")
+    markdown_files = ROOT.glob("**/*.md")
 
     for path in markdown_files:
         text = path.read_text(encoding="utf-8")
@@ -34,11 +50,23 @@ def test_markdown_files_are_valid_utf8() -> None:
 
 
 def test_coverage_matrix_contains_all_sixteen_chapters() -> None:
-    matrix = (ROOT / "coverage_matrix.md").read_text(encoding="utf-8")
+    matrix = (ROOT / "docs/curriculum/full_coverage_matrix.md").read_text(
+        encoding="utf-8"
+    )
 
     missing = [chapter for chapter in range(1, 17) if f"第{chapter}章" not in matrix]
 
     assert not missing, f"覆盖矩阵缺少章节: {missing}"
+
+
+def test_root_readme_has_one_current_learning_entry() -> None:
+    readme = (ROOT / "README.md").read_text(encoding="utf-8")
+    expected = "02_machine_learning/01_linear_regression/README.md"
+    assert expected in readme
+    assert readme.count("**当前学习：线性回归**") == 1
+
+    legacy_entry = (ROOT / "START_HERE.md").read_text(encoding="utf-8")
+    assert "本文件只为旧链接保留" in legacy_entry
 
 
 def test_reference_solutions_have_no_placeholders() -> None:

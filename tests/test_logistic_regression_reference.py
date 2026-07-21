@@ -6,7 +6,7 @@ import pytest
 
 
 ROOT = Path(__file__).resolve().parents[1]
-SOLUTION = ROOT / "watermelon_book" / "03_linear_models" / "02_logistic_regression" / "reference" / "solution.py"
+SOLUTION = ROOT / "02_machine_learning" / "02_logistic_regression" / "reference" / "solution.py"
 
 
 def load_solution_module():

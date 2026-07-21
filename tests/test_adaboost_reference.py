@@ -8,7 +8,7 @@ import numpy as np
 import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
-TOPIC = ROOT / "watermelon_book" / "08_ensemble_learning" / "01_adaboost"
+TOPIC = ROOT / "02_machine_learning" / "09_ensemble_learning" / "01_adaboost"
 spec = importlib.util.spec_from_file_location("adaboost_solution", TOPIC / "reference" / "solution.py")
 assert spec is not None and spec.loader is not None
 solution = importlib.util.module_from_spec(spec); spec.loader.exec_module(solution)
@@ -121,9 +121,8 @@ def test_prediction_rejects_feature_mismatch() -> None:
 
 
 def test_guided_demo_runs_and_reports_weight_shift_and_fit() -> None:
-    result = subprocess.run([sys.executable, str(TOPIC / "guided_demo.py")], cwd=ROOT,
+    result = subprocess.run([sys.executable, str(TOPIC / "reference_demo.py")], cwd=ROOT,
         check=True, capture_output=True, text=True, encoding="utf-8", env={**os.environ, "PYTHONUTF8": "1"})
     assert "first stump:" in result.stdout
     assert "after first round: [0.125 0.125 0.5   0.125 0.125]" in result.stdout
     assert "training prediction: [-1, 1, -1, 1, 1]" in result.stdout
-

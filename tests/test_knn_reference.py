@@ -9,7 +9,7 @@ import pytest
 
 
 ROOT = Path(__file__).resolve().parents[1]
-TOPIC = ROOT / "watermelon_book" / "10_dimensionality_reduction" / "01_knn"
+TOPIC = ROOT / "02_machine_learning" / "03_knn"
 spec = importlib.util.spec_from_file_location("knn_solution", TOPIC / "reference" / "solution.py")
 assert spec is not None and spec.loader is not None
 solution = importlib.util.module_from_spec(spec)
@@ -155,7 +155,7 @@ def test_bad_regression_targets_are_rejected() -> None:
 
 def test_guided_demo_runs_and_reports_shapes_and_predictions() -> None:
     result = subprocess.run(
-        [sys.executable, str(TOPIC / "guided_demo.py")],
+        [sys.executable, str(TOPIC / "reference_demo.py")],
         cwd=ROOT,
         check=True,
         capture_output=True,

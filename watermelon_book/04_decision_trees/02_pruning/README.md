@@ -4,7 +4,7 @@
 
 完整生长的决策树很容易记住训练数据中的偶然模式。剪枝必须使用独立验证集判断简化后是否更好，不能拿训练准确率同时完成建树和剪枝决策。
 
-本专题沿用 `01_discrete_tree/reference/solution.py` 的树结构和预测规则，新增两种剪枝函数。
+本专题沿用 [新决策树参考实现](../../../02_machine_learning/06_decision_tree/reference/solution.py) 的树结构和预测规则，新增两种剪枝函数。
 
 ## 预剪枝
 

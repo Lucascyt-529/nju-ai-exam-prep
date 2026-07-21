@@ -1,70 +1,7 @@
-# 线性模型1：NumPy线性回归
+# 旧线性回归路径
 
-## 模型与形状
+普通线性回归已经迁移到新的唯一学习入口：
 
-对第 `i` 个样本：
+[02_machine_learning/01_linear_regression/README.md](../../../02_machine_learning/01_linear_regression/README.md)
 
-```text
-prediction_i = x_i · w + b
-```
-
-全部样本向量化后：
-
-```python
-prediction = X @ w + b
-```
-
-形状为 `(n, d) @ (d,) -> (n,)`，再加标量 `b`。
-
-## 均方误差与梯度
-
-```text
-error = prediction - y                         # (n,)
-MSE = mean(error²)                             # 标量
-gradient_w = (2/n) X.T @ error                # (d,)
-gradient_b = 2 mean(error)                    # 标量
-```
-
-如果 `prediction` 是 `(n,1)` 而 `y` 是 `(n,)`，第一行会广播成 `(n,n)`，损失和梯度随即失去含义。本专题在入口直接拒绝这种形状。
-
-## 两种拟合方法
-
-### 最小二乘
-
-在特征左边添加常数1，把截距并入参数，然后使用 `np.linalg.lstsq` 求平方误差最小解。相比显式计算逆矩阵，它对奇异或近奇异问题更稳健。
-
-### 梯度下降
-
-从初始参数出发，重复：
-
-```text
-w = w - learning_rate * gradient_w
-b = b - learning_rate * gradient_b
-```
-
-学习率过大可能发散；迭代次数不足可能尚未收敛。损失下降是必要检查，但不能单凭“最后比最初小”证明实现完全正确。
-
-## 运行前预测
-
-对 `X=[[1],[2],[3]]`、`w=[2]`、`b=1`、`y=[3,5,7]`：
-
-1. 预测值和误差分别是什么；
-2. MSE是多少；
-3. `X.T @ error` 的形状；
-4. 最优参数应该是什么。
-
-## 学生任务和迁移
-
-完成 `starter.py` 后：
-
-1. 增加第二个特征并手算第一个样本；
-2. 给标签增加噪声，比较最小二乘与梯度下降结果；
-3. 构造重复特征造成秩亏，观察 `lstsq` 仍能给出预测等价解；
-4. 分别把学习率扩大10倍、100倍，观察损失历史；
-5. 用有限差分检查一个权重梯度。
-
-## 下一子专题
-
-`generalized_linear_models/` 在本专题普通线性回归之上引入联系函数、逆联系和
-对数线性回归，并说明它与下一节对数几率回归的关系。先掌握本页的一维形状、
-最小二乘和梯度，再进入该子专题。
+本目录不再保留第二份普通线性回归 starter、demo 或参考实现。尚未迁移的广义线性模型内容暂留在 [generalized_linear_models/](generalized_linear_models/)。

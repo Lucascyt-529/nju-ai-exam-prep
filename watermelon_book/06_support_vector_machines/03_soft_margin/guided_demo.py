@@ -7,7 +7,7 @@ import numpy as np
 
 
 TOPIC = Path(__file__).resolve().parent
-SMO_SOLUTION = TOPIC.parent / "02_linear_smo" / "reference" / "solution.py"
+SMO_SOLUTION = TOPIC.parents[2] / "02_machine_learning" / "11_svm" / "reference" / "solution.py"
 SOFT_SOLUTION = TOPIC / "reference" / "solution.py"
 
 
