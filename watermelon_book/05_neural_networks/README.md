@@ -4,7 +4,7 @@
 
 | 顺序 | 专题 | 状态 |
 | --- | --- | --- |
-| 1 | `01_perceptron/`：线性得分、阈值预测和感知机更新 | 已建参考闭环 |
+| 1 | [新神经网络入口](../../02_machine_learning/08_neural_network/README.md)：线性得分、阈值预测和感知机更新 | 已迁移 |
 | 2 | `02_forward_propagation/`：单隐层前向传播、标签形状与稳定损失 | 已建参考闭环 |
 | 3 | `03_backpropagation/`：BP反向传播与有限差分梯度检查 | 已建参考闭环 |
 | 4 | `04_bp_training/`：标准BP、累积BP、训练历史、预测与XOR | 已建参考闭环 |

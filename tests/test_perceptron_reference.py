@@ -8,7 +8,7 @@ import pytest
 
 
 ROOT = Path(__file__).resolve().parents[1]
-TOPIC = ROOT / "watermelon_book" / "05_neural_networks" / "01_perceptron"
+TOPIC = ROOT / "02_machine_learning" / "08_neural_network"
 SOLUTION = TOPIC / "reference" / "solution.py"
 
 
@@ -147,7 +147,7 @@ def test_invalid_parameters_are_rejected(call) -> None:
 
 def test_guided_demo_reports_shapes_and_first_update() -> None:
     result = subprocess.run(
-        [sys.executable, str(TOPIC / "guided_demo.py")],
+        [sys.executable, str(TOPIC / "reference_demo.py")],
         text=True,
         capture_output=True,
         check=True,

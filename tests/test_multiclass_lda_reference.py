@@ -8,7 +8,7 @@ import pytest
 
 
 ROOT = Path(__file__).resolve().parents[1]
-TOPIC = ROOT / "watermelon_book" / "03_linear_models" / "03_lda"
+TOPIC = ROOT / "02_machine_learning" / "10_lda"
 SOLUTION = TOPIC / "reference" / "solution.py"
 STARTER = TOPIC / "starter.py"
 
@@ -283,7 +283,7 @@ def test_student_multiclass_entry_points_remain_unimplemented(
 
 def test_guided_demo_shows_scatter_identity_and_dimension_limit() -> None:
     result = subprocess.run(
-        [sys.executable, str(TOPIC / "guided_demo.py")],
+        [sys.executable, str(TOPIC / "reference_demo.py")],
         text=True,
         capture_output=True,
         check=True,

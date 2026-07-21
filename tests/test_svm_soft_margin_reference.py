@@ -11,7 +11,7 @@ import pytest
 ROOT = Path(__file__).resolve().parents[1]
 CHAPTER = ROOT / "watermelon_book" / "06_support_vector_machines"
 SOFT_SOLUTION = CHAPTER / "03_soft_margin" / "reference" / "solution.py"
-SMO_SOLUTION = CHAPTER / "02_linear_smo" / "reference" / "solution.py"
+SMO_SOLUTION = ROOT / "02_machine_learning" / "11_svm" / "reference" / "solution.py"
 
 
 def load_module(name: str, path: Path):

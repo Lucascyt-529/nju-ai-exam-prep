@@ -4,7 +4,7 @@
 
 ## 每批工作的顺序
 
-1. 阅读 `AGENTS.md`、`README.md`、`coverage_matrix.md` 和 `progress.md`。
+1. 阅读 `AGENTS.md`、`README.md`、`docs/curriculum/full_coverage_matrix.md` 和 `LEARNING_STATUS.md`。
 2. 检查 `git status`，确认没有覆盖用户正在完成的练习。
 3. 选择一个足够小、能够在本轮验证的目标。
 4. 先写题目、输入输出约定和验收条件，再写参考实现与测试。
@@ -34,7 +34,7 @@ topic_name/
 
 ## 状态更新
 
-`coverage_matrix.md` 只使用以下状态：
+`docs/curriculum/full_coverage_matrix.md` 只使用以下状态：
 
 - `未开始`
 - `已建骨架`

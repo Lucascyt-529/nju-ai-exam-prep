@@ -8,7 +8,7 @@ import pytest
 
 
 ROOT = Path(__file__).resolve().parents[1]
-TOPIC = ROOT / "watermelon_book" / "03_linear_models" / "02_logistic_regression"
+TOPIC = ROOT / "02_machine_learning" / "02_logistic_regression"
 SOLUTION = TOPIC / "reference" / "solution.py"
 STARTER = TOPIC / "starter.py"
 
@@ -254,7 +254,7 @@ def test_student_newton_entry_points_remain_unimplemented(function_name: str) ->
 
 def test_guided_demo_reports_hessian_and_optimizer_comparison() -> None:
     result = subprocess.run(
-        [sys.executable, str(TOPIC / "guided_demo.py")],
+        [sys.executable, str(TOPIC / "reference_demo.py")],
         text=True,
         capture_output=True,
         check=True,

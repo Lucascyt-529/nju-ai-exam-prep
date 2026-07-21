@@ -8,7 +8,7 @@ import pytest
 
 
 ROOT = Path(__file__).resolve().parents[1]
-TOPIC = ROOT / "watermelon_book" / "06_support_vector_machines" / "02_linear_smo"
+TOPIC = ROOT / "02_machine_learning" / "11_svm"
 SOLUTION = TOPIC / "reference" / "solution.py"
 
 
@@ -141,7 +141,7 @@ def test_invalid_smo_inputs_are_rejected(call) -> None:
 
 def test_guided_demo_reports_constraints_and_objectives() -> None:
     result = subprocess.run(
-        [sys.executable, str(TOPIC / "guided_demo.py")],
+        [sys.executable, str(TOPIC / "reference_demo.py")],
         text=True,
         capture_output=True,
         check=True,
