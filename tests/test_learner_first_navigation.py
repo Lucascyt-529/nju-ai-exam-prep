@@ -97,21 +97,22 @@ def test_learner_catalogs_link_every_verified_topic() -> None:
             assert phrase not in text, f"{catalog} 仍含占位措辞: {phrase}"
 
 
-def test_legacy_indexes_redirect_to_learner_catalogs() -> None:
-    redirects = {
-        "00_python_programming/README.md": "../03_data_io_processing/README.md",
-        "01_file_io/README.md": "../03_data_io_processing/README.md",
-        "02_numpy_basics/README.md": "../01_numpy/README.md",
-        "03_data_processing/README.md": "../03_data_io_processing/README.md",
-        "04_pandas_basics/README.md": "../03_data_io_processing/README.md",
-        "algorithms/README.md": "../04_algorithms/README.md",
-        "integrated_tasks/README.md": "../05_integrated_practice/README.md",
-        "mock_exams/README.md": "../06_mock_exams/README.md",
-    }
-    for legacy, target in redirects.items():
-        text = (ROOT / legacy).read_text(encoding="utf-8")
-        assert "兼容入口" in text
-        assert f"]({target})" in text
+def test_deprecated_aggregate_indexes_are_removed() -> None:
+    old_indexes = [
+        "START_HERE.md",
+        "00_python_programming/README.md",
+        "01_file_io/README.md",
+        "02_numpy_basics/README.md",
+        "03_data_processing/README.md",
+        "04_pandas_basics/README.md",
+        "algorithms/README.md",
+        "integrated_tasks/README.md",
+        "mock_exams/README.md",
+        "docs/project_management/original_build_spec.md",
+        "docs/project_management/legacy_progress.md",
+        "records/migration_backups/linear_regression_starter_before_refactor.py",
+    ]
+    assert not [path for path in old_indexes if (ROOT / path).exists()]
 
 
 def test_all_relative_markdown_links_resolve() -> None:

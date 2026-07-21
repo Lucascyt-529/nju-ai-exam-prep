@@ -12,9 +12,9 @@
 ## Learner-first 重构
 
 - 根目录学习入口改为 `README.md`，当前唯一专题入口是 `02_machine_learning/01_linear_regression/README.md`；
-- 个人学习状态收敛为根目录 `LEARNING_STATUS.md`，旧详细进度归档为 `docs/project_management/legacy_progress.md`；
+- 个人学习状态收敛为根目录 `LEARNING_STATUS.md`，旧详细进度归档在重构验收后删除；
 - 建仓、覆盖、考试证据与历史文档迁移到 `docs/`；
-- 建立学习者优先顶层导航；原专题路径稳定保留实现与测试，旧总目录页退役为兼容跳转，不再作为第二套学习入口；
+- 建立学习者优先顶层导航；原专题路径稳定保留实现与测试，旧总目录页和只剩跳转作用的旧机器学习 README 已删除；
 - 线性回归成为首个完整样板，分离 README、starter、demo、check、练习、参考实现和严格测试；
 - 当前机器学习学习代码优先展示预测、损失/指标、训练和验证主线；学生版暂不加入数组行列、shape 和元素内容校验，这些基础能力后移到文件读写与数据处理阶段复验。
 
@@ -44,7 +44,7 @@
 
 - NumPy、文件与数据处理、算法题、综合练习和模拟机试从占位说明改为实际可用目录，列出全部现有专题、推荐顺序、进入条件和完成标准；
 - 根 README 新增仓库材料与个人学习状态对照，修正模型评估在机器学习主线中的位置；
-- 八个旧总目录 README 退役为兼容入口，具体专题物理路径保留，避免破坏测试和正在填写的学生文件；
+- 八个旧总目录 README 与13个只剩跳转作用的旧机器学习 README 已删除，具体专题物理路径保留，避免破坏测试和仍有价值的进阶内容；
 - 明确关闭原暂缓项：进阶教材继续由 `watermelon_book/` 承载；严格参考测试不改造成日常 check；两套模拟卷已符合模拟边界，无需重写；
 - 新增 `learner_first_acceptance.md` 和导航验收测试，逐项证明根入口、六大目录、相对链接和兼容策略。
 
@@ -1004,7 +1004,7 @@ Phase 12 第三十七批已完成并纳入本批提交：
   - 已转入机器学习主体：训练/验证/测试职责通过6/2/2案例及标准化变式验证；学习者能区分选参阶段训练集统计量隔离与选参后的开发集最终重训。
   - 回归指标MAE/MSE/RMSE/R²学生实现已通过；线性回归预测、MSE、解析梯度与批量梯度下降也已完成现场实现和数值验证，精确直线收敛且有限差分一致。
   - 学习者认为`np.linalg.lstsq`与增广矩阵当前偏难，解析最小二乘暂缓；已能根据训练/验证损失识别学习率问题与过拟合，当前进入完整线性回归数据任务，先迁移预测与指标函数。
-  - `START_HERE.md` 已降级为旧链接兼容说明；当前学习入口只由根目录 `README.md` 指定。
+  - 根目录旧 `START_HERE.md` 已删除；当前学习入口只由根目录 `README.md` 指定。
 
 个人学习证据与详细错误以根目录 `LEARNING_STATUS.md` 和 `records/bug_book/` 为准。
 
@@ -1028,12 +1028,13 @@ Phase 12 第三十七批已完成并纳入本批提交：
 ## 最近验证基线
 
 - 日期：2026-07-21
-- Learner-first 导航、结构与机器学习入口专项：`python -m pytest -q tests/test_learner_first_navigation.py tests/test_repository_structure.py tests/test_machine_learning_learning_entries.py tests/test_linear_regression_learning_entry.py`，80项通过（3.51秒）。
-- 新导航逐项覆盖6个 NumPy 专题、17个程序/文件/数据/pandas 专题、9个算法题、5个综合任务和2套模拟卷；八个旧总目录页均跳回对应新入口。
+- Learner-first 导航、结构与机器学习入口专项：`python -m pytest -q tests/test_learner_first_navigation.py tests/test_repository_structure.py tests/test_machine_learning_learning_entries.py tests/test_linear_regression_learning_entry.py`，80项通过（3.39秒）。
+- 新导航逐项覆盖6个 NumPy 专题、17个程序/文件/数据/pandas 专题、9个算法题、5个综合任务和2套模拟卷；八个旧总目录页已删除。
 - 13个非线性回归入口 README 均不少于70行，并包含“运行与核对、常见错误、自学闭环”；所有具体算法另含“算法概览”。
 - 每个 `demo.py` 均可直接运行且不出现 traceback；每个简化 `check.py` 接入对应参考实现后均返回成功。
 - 学生 `starter.py` 未加入基础数组 shape、行列数或元素内容校验；严格参考实现与自动测试继续保留这些边界证据。
-- 全量测试：`python -m pytest -q`，2176项通过（37.99秒）。
+- Python 语法检查：对程序、基础、机器学习、数据处理、算法题、综合题、模拟卷、测试和教材目录运行 `python -m compileall -q`，全部通过。
+- 全量测试：`python -m pytest -q`，2176项通过（35.64秒）。
 - Markdown 相对链接审计：全部链接目标存在。
 - Learner-first 重构通过 `refactor/learner-first-v1` 发布；实际提交、远程和合并状态恢复时以 `git log`、`git status` 与远程分支为准。
 

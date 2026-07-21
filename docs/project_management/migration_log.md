@@ -8,9 +8,9 @@
 
 ## 移动与重命名
 
-- 原根目录 `README.md` -> `docs/project_management/original_build_spec.md`
+- 原根目录 `README.md` -> `docs/project_management/original_build_spec.md`（最终同步清理时删除）
 - `PROJECT_STATE.md` -> `docs/project_management/BUILD_STATUS.md`
-- `progress.md` -> `docs/project_management/legacy_progress.md`
+- `progress.md` -> `docs/project_management/legacy_progress.md`（最终同步清理时删除）
 - `coverage_matrix.md` -> `docs/curriculum/full_coverage_matrix.md`
 - `foundation_coverage.md` -> `docs/curriculum/foundation_coverage.md`
 - `learning_method.md` -> `docs/curriculum/learning_method.md`
@@ -79,7 +79,7 @@ python -m pytest -q
 - `watermelon_book/` 继续作为教材进阶扩展库，由 `02_machine_learning/advanced/` 统一导航；机械搬迁不会改善日常学习，因此不再列为待办。
 - 两套模拟卷已经只通过题面、数据、输出、时间和评分组织正式作答，不重写已验证题目。
 - 严格参考测试继续与日常 `check.py` 分离，避免把工程边界检查重新塞回主线练习。
-- 旧基础目录和综合任务保留稳定物理路径；新的六大入口列出全部实际专题，旧总页改为兼容跳转。该策略保护测试引用和学习者未提交代码，不再列为待迁移。
+- 旧基础目录和综合任务保留稳定物理路径；新的六大入口列出全部实际专题，旧总页在最终同步时完全删除。该策略保护实现与测试引用，同时消除第二套导航。
 
 ## Learner-first 第二阶段
 
@@ -125,7 +125,18 @@ python -m pytest -q
 - 审计根 README 后确认机器学习已完成，但 NumPy、数据处理、算法题、综合练习和模拟机试仍含“后续整理、本轮不迁移”等占位措辞。
 - 将五个入口改为正式学习目录，直接列出6个 NumPy 专题、17个程序/文件/处理/pandas 专题、9个算法题、5个综合任务和2套模拟卷。
 - 根 README 新增六模块“仓库材料/个人学习状态”对照，避免把已有参考实现误认为学习者掌握。
-- 八个旧总目录 README 改为兼容跳转，稳定专题路径不做无收益搬迁；当前线性回归 CSV 学生修改继续保留原位。
+- 八个旧总目录 README 和13个旧机器学习跳转 README 在最终同步时删除，稳定专题路径不做无收益搬迁；当前线性回归 CSV 学生修改继续保留原位。
 - 新增 learner-first 完成验收表和导航测试，覆盖六大入口、占位清零、旧页跳转及全仓相对链接。
 
 验证结果：learner-first 导航、结构与机器学习入口专项80项通过；全量2176项通过；全仓 Markdown 相对链接由自动测试逐项验证。未修改学习者 CSV starter。本阶段完成目录重构，不改变第11～16章长期课程优先级。
+
+## 最终 GitHub 同步清理
+
+日期：2026-07-21
+
+- 用户确认当前内容全部同步到 GitHub，旧内容不再需要时可完全删除。
+- 删除八个旧总目录 README、13个只剩迁移跳转的旧机器学习 README、根目录旧 `START_HERE.md`、旧建仓任务书、旧详细进度快照和迁移临时代码备份。
+- 保留仍含真实专题实现、测试、数据或进阶教材内容的物理目录；六大入口是唯一学习导航。
+- 将当前线性回归 CSV 学生进度纳入同步；只为空的 `fit_least_squares` 补回 `NotImplementedError`，保证文件可被 Python 解析，不改动其余学生实现。
+
+验证结果：全部主要 Python 目录通过 `compileall`；learner-first 专项80项通过；全量2176项通过；全仓 Markdown 相对链接有效。

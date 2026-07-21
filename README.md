@@ -67,6 +67,6 @@ python 02_machine_learning/01_linear_regression/check.py
 ## 管理与旧内容
 
 - [docs/](docs/) 保存建设状态、覆盖矩阵和历史材料，不作为日常入口；
-- [records/](records/) 保存错题与迁移备份；
+- [records/](records/) 保存经确认的错题与学习记录；
 - 旧专题物理路径在不产生重复实现的前提下保留，六大入口是稳定的学习导航；
-- 已迁移的机器学习核心在旧位置仅保留跳转，进阶内容继续由 [advanced](02_machine_learning/advanced/README.md) 导航。
+- 已迁移的机器学习核心旧入口已经删除，进阶内容继续由 [advanced](02_machine_learning/advanced/README.md) 导航。

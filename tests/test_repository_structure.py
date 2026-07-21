@@ -7,13 +7,11 @@ ROOT = Path(__file__).resolve().parents[1]
 def test_required_control_files_exist() -> None:
     required_files = {
         Path("README.md"),
-        Path("START_HERE.md"),
         Path("AGENTS.md"),
         Path("CONTRIBUTING.md"),
         Path("LEARNING_STATUS.md"),
         Path("docs/project_management/BUILD_STATUS.md"),
         Path("docs/project_management/historical_baseline.md"),
-        Path("docs/project_management/legacy_progress.md"),
         Path("docs/project_management/learner_first_acceptance.md"),
         Path("docs/curriculum/learning_method.md"),
         Path("docs/curriculum/syllabus.md"),
@@ -65,9 +63,6 @@ def test_root_readme_has_one_current_learning_entry() -> None:
     expected = "02_machine_learning/01_linear_regression/README.md"
     assert expected in readme
     assert readme.count("**当前学习：线性回归**") == 1
-
-    legacy_entry = (ROOT / "START_HERE.md").read_text(encoding="utf-8")
-    assert "本文件只为旧链接保留" in legacy_entry
 
 
 def test_reference_solutions_have_no_placeholders() -> None:
