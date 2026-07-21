@@ -14,7 +14,7 @@
 - 根目录学习入口改为 `README.md`，当前唯一专题入口是 `02_machine_learning/01_linear_regression/README.md`；
 - 个人学习状态收敛为根目录 `LEARNING_STATUS.md`，旧详细进度归档为 `docs/project_management/legacy_progress.md`；
 - 建仓、覆盖、考试证据与历史文档迁移到 `docs/`；
-- 建立学习者优先顶层导航，未迁移旧目录暂时保留但不再作为首页入口；
+- 建立学习者优先顶层导航；原专题路径稳定保留实现与测试，旧总目录页退役为兼容跳转，不再作为第二套学习入口；
 - 线性回归成为首个完整样板，分离 README、starter、demo、check、练习、参考实现和严格测试；
 - 当前机器学习学习代码优先展示预测、损失/指标、训练和验证主线；学生版暂不加入数组行列、shape 和元素内容校验，这些基础能力后移到文件读写与数据处理阶段复验。
 
@@ -39,6 +39,14 @@
 - 模型评估新增“基本认识”，区分经验误差、泛化能力与模型选择；集成学习总览补充准确性和多样性的整体关系；
 - 内容参考周志华《机器学习》的知识组织进行转述，不复制教材原文，也不提前展开后续推导；
 - 自动测试要求所有具体算法保留“算法概览”，避免 README 只剩公式和代码步骤。
+
+第五阶段完成六大入口与最终验收：
+
+- NumPy、文件与数据处理、算法题、综合练习和模拟机试从占位说明改为实际可用目录，列出全部现有专题、推荐顺序、进入条件和完成标准；
+- 根 README 新增仓库材料与个人学习状态对照，修正模型评估在机器学习主线中的位置；
+- 八个旧总目录 README 退役为兼容入口，具体专题物理路径保留，避免破坏测试和正在填写的学生文件；
+- 明确关闭原暂缓项：进阶教材继续由 `watermelon_book/` 承载；严格参考测试不改造成日常 check；两套模拟卷已符合模拟边界，无需重写；
+- 新增 `learner_first_acceptance.md` 和导航验收测试，逐项证明根入口、六大目录、相对链接和兼容策略。
 
 提交哈希不要手工复制到这里；恢复时使用 `git log -5 --oneline` 获取真实记录，避免状态文件与提交产生循环更新。
 
@@ -1020,11 +1028,12 @@ Phase 12 第三十七批已完成并纳入本批提交：
 ## 最近验证基线
 
 - 日期：2026-07-21
-- 机器学习学习入口专项：`python -m pytest -q tests/test_machine_learning_learning_entries.py tests/test_linear_regression_learning_entry.py`，69项通过（5.85秒）。
+- Learner-first 导航、结构与机器学习入口专项：`python -m pytest -q tests/test_learner_first_navigation.py tests/test_repository_structure.py tests/test_machine_learning_learning_entries.py tests/test_linear_regression_learning_entry.py`，80项通过（3.51秒）。
+- 新导航逐项覆盖6个 NumPy 专题、17个程序/文件/数据/pandas 专题、9个算法题、5个综合任务和2套模拟卷；八个旧总目录页均跳回对应新入口。
 - 13个非线性回归入口 README 均不少于70行，并包含“运行与核对、常见错误、自学闭环”；所有具体算法另含“算法概览”。
 - 每个 `demo.py` 均可直接运行且不出现 traceback；每个简化 `check.py` 接入对应参考实现后均返回成功。
 - 学生 `starter.py` 未加入基础数组 shape、行列数或元素内容校验；严格参考实现与自动测试继续保留这些边界证据。
-- 全量测试：`python -m pytest -q`，2172项通过（46.36秒）。
+- 全量测试：`python -m pytest -q`，2176项通过（37.99秒）。
 - Markdown 相对链接审计：全部链接目标存在。
 - Learner-first 重构通过 `refactor/learner-first-v1` 发布；实际提交、远程和合并状态恢复时以 `git log`、`git status` 与远程分支为准。
 

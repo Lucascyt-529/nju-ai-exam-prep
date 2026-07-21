@@ -14,6 +14,7 @@ def test_required_control_files_exist() -> None:
         Path("docs/project_management/BUILD_STATUS.md"),
         Path("docs/project_management/historical_baseline.md"),
         Path("docs/project_management/legacy_progress.md"),
+        Path("docs/project_management/learner_first_acceptance.md"),
         Path("docs/curriculum/learning_method.md"),
         Path("docs/curriculum/syllabus.md"),
         Path("docs/curriculum/full_coverage_matrix.md"),
